@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { EffectCreative, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from './Button';
@@ -8,9 +8,18 @@ import { BsBag, BsPersonFill, BsSearch } from 'react-icons/bs'
 import Select from 'react-select'
 import { Link } from 'react-router-dom';
 import useToggleCartSlider from '../utils/useToggleCartSlider';
-const NavBar = ({ isOpen, setIsOpen }) => {
+import { useSelector } from 'react-redux';
+const NavBar = ({setIsOpen }) => {
     const { open } = useToggleCartSlider()
-
+    const { totalAmount } = useSelector(state => state.cartItems)
+    const [isCartEmpty, setIsCartEmpty] = useState(false)
+    useEffect(() => {
+        if (totalAmount > 0) {
+            setIsCartEmpty(true)
+        }else{
+            setIsCartEmpty(false)
+        }
+    }, [totalAmount])
     const [toggle, setToggle] = useState(false)
     const style = {
         control: base => ({
@@ -44,33 +53,33 @@ const NavBar = ({ isOpen, setIsOpen }) => {
     ]
     return (
         <>
-             <div
-        className='py-2 text-white text-center mx-auto bg-black/95'
-      >
-        <Swiper
-          modules={[Autoplay, Navigation]}
-          navigation={true}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false
-          }}
-        >
-          <SwiperSlide>
-            <p
-              className='text-xs md:sm lg:lg'
-            >FREE SHIPPING OVER $75 USD & EASY RETURNS</p>
-          </SwiperSlide>
-          <SwiperSlide>
-            <p
-              className='text-xs md:sm lg:lg'
-            >TODAY'S CLEANEST DIVE WATCH | SHOP CALI DIVER SHOP NOW <Button
-                title="shop now"
-                className="!inline-block !px-2 "
-              /></p>
-          </SwiperSlide>
-        </Swiper>
-      </div>
-        
+            <div
+                className='py-2 text-white text-center mx-auto bg-black/95'
+            >
+                <Swiper
+                    modules={[Autoplay, Navigation]}
+                    navigation={true}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false
+                    }}
+                >
+                    <SwiperSlide>
+                        <p
+                            className='text-xs md:sm lg:lg'
+                        >FREE SHIPPING OVER $75 USD & EASY RETURNS</p>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <p
+                            className='text-xs md:sm lg:lg'
+                        >TODAY'S CLEANEST DIVE WATCH | SHOP CALI DIVER SHOP NOW <Button
+                                title="shop now"
+                                className="!inline-block !px-2 "
+                            /></p>
+                    </SwiperSlide>
+                </Swiper>
+            </div>
+
             <div className='min-h-[5rem] sticky z-50 top-0 right-0 w-full bg-white shadow  '>
                 <div className='container 
                 relative lg:static
@@ -165,33 +174,33 @@ const NavBar = ({ isOpen, setIsOpen }) => {
                                 />
                             </motion.div>
                             <div
-                className=' hidden absolute top-[calc(100%+6px)] lg:flex flex-col space-y-5 -translate-x-1/2 translate-y-5 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 left-1/2 invisible group-hover:visible
+                                className=' hidden absolute top-[calc(100%+6px)] lg:flex flex-col space-y-5 -translate-x-1/2 translate-y-5 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 left-1/2 invisible group-hover:visible
                              min-h-[70px] bg-black/95 px-5 py-4 min-w-fit
                              '
-              >
-                <div
-                  className='flex flex-col gap-y-4 w-full'
-                >
-                  <Button
-                    title="log in "
-                    className="!block break-keep flex-1 
+                            >
+                                <div
+                                    className='flex flex-col gap-y-4 w-full'
+                                >
+                                    <Button
+                                        title="log in "
+                                        className="!block break-keep flex-1 
                                     !rounded-full !py-3 !px-4  !text-xs !min-w-[100px]
                                     !text-center
                                     !bg-white !text-black !font-medium uppercase
                                     "
-                  />
-                  <Button
-                    title="sign up"
-                    className="!block break-keep 
+                                    />
+                                    <Button
+                                        title="sign up"
+                                        className="!block break-keep 
                                     !rounded-full !py-3 !px-4  !text-xs
                                     !text-center !border-2 !border-white
                                     !bg-black !font-medium uppercase
                                     "
-                  />
-                </div>
+                                    />
+                                </div>
 
 
-              </div>
+                            </div>
                         </motion.div>
                         <motion.div
 
@@ -201,11 +210,12 @@ const NavBar = ({ isOpen, setIsOpen }) => {
                                     scale: 1.2
                                 }}
                             >
-                                <div
-                                    className='w-2.5 h-2.5 bg-rose-800 rounded-full right-0 absolute -top-0.5'
-                                >
+                                {
+                                    isCartEmpty && <div
+                                        className='w-2.5 h-2.5 bg-rose-800 rounded-full right-0 absolute -top-0.5' />
+                                }
 
-                                </div>
+
                                 <BsBag
                                     onClick={() => open()}
                                     className='text-gray-700'

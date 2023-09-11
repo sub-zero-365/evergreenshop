@@ -17,14 +17,12 @@ const variants = {
         y: 100, opacity: 0.3
     }
 }
-const ProductCart = ({ id = 1, className }) => {
+const ProductCart = (props) => {
+    const { id = 1, className } = props
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const item = {
-        productname: "newly",
-        price: 120,
-        total: 1,
-        id: 1
+        ...props
     }
     const [activeSlide, setActiveSlide] = useState(0)
     const { incart } = useItem(id)

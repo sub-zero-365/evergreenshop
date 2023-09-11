@@ -13,26 +13,7 @@ import { Link } from 'react-router-dom';
 import ProductCart from '../components/ProductCart';
 import { data } from '../constants/demoData';
 const Home = () => {
-  const BlogCard = () => {
 
-    return <div
-      className='flex justify-between  gap-4 items-start flex-none p-4 rounded-3xl lg:rounded-none  bg-[#28333a]'
-    >
-      <div
-        className='flex-none'
-      >
-        <GrDeliver color="white"
-          className='text-[#8c955f]'
-          size={30}
-        />
-
-      </div>
-      <div className='pr-10'>
-        <h1>Free Shipping</h1>
-        <p>Above $150 Only</p>
-      </div>
-    </div>
-  }
   return (
     <div>
       <>
@@ -201,6 +182,7 @@ const Home = () => {
         </div>
         <div className=" flex flex-nowrap gap-x-2 bg-white  overflow-x-auto overflow-y-hidden">
           {data.map((arr, index) => <ProductCart
+        
             className="rounded-md !max-w-[13rem] md:!max-w-[14rem]"
             key={index}
             {
@@ -217,7 +199,10 @@ const Home = () => {
         <div
           className='grid  grid-cols-[repeat(auto-fit,minmax(min(12rem,calc(100%-30px)),_1fr))]  lg:grid-cols-[repeat(auto-fit,minmax(min(17rem,calc(100%-30px)),_1fr))] !w-full   !container mx-auto lg:px-6 gap-x-1 lg:gap-x-0'
         >
-          {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((arr, index) => <ProductCart
+          {data.map((item, index) => <ProductCart
+            {
+            ...item
+            }
             className="rounded-md !w-full"
             key={index}
 

@@ -4,6 +4,10 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Product, { loader as productLoader } from './pages/Product';
 import ErrorElement from './components/ErrorElement';
+import ShoppingBag from './pages/ShoppingBag';
+import Shop from './pages/Shop';
+import ProductCart from './components/ProductCart';
+import ProductCategory, { loader as ProductCategoryLoader } from './pages/ProductCategory';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +27,21 @@ const router = createBrowserRouter([
         path: "product/:id",
         element: <Product />,
         loader: productLoader
+      },
+      {
+        path: "shopping-bag",
+        element: <ShoppingBag />,
+
+      },
+      {
+        path: "product-category/:id",
+        element: <ProductCategory />,
+        loader: ProductCategoryLoader
+      },
+      {
+        path: "shop",
+        element: <Shop />,
+
       },
     ]
   }

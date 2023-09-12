@@ -28,17 +28,16 @@ const cartSlice = createSlice({
             const {
                 cartItem: item
             } = state;
-            const isItem = item.find(({ id }) => id === payload);
+            const isItem = item.find(({ id }) => id == payload);
             if (isItem.total > 9) return
 
             isItem.total += 1
         },
         decreaseItem(state, { payload }) {
-            const {
-                cartItem: item
-            } = state;
-            const isItem = item.find(({ id }) => id === payload);
-            if (isItem.total <= 1) return
+            const item=state.cartItem
+            const isItem = item.find(({ id }) => id == payload);
+            console.log(isItem, payload)
+            if (isItem?.total ?? isItem?.total <= 1) return
             isItem.total -= 1
         },
         removeFromCart(state, { payload }) {
@@ -58,5 +57,5 @@ const cartSlice = createSlice({
         }
     }
 })
-export const { removeFromCart, calculateTotal, addToCart, increaseItem, decreaseItem,clearCart } = cartSlice.actions
+export const { removeFromCart, calculateTotal, addToCart, increaseItem, decreaseItem, clearCart } = cartSlice.actions
 export default cartSlice.reducer

@@ -5,12 +5,15 @@ import SideBar from './SideBar'
 import useToggleCartSlider from '../utils/useToggleCartSlider'
 import CartModal from './CartModal'
 import NotificationPopUp from './NotificationPopup'
+import GreetingModal from './GreetingModal'
+import Footer from './Footer'
 
 const RootElement = () => {
     const { isOpen: active } = useToggleCartSlider()
     const [isOpen, setIsOpen] = useState(false)
     return (
         <>
+            <GreetingModal />
             <NotificationPopUp />
             <CartModal />
             <NavBar
@@ -22,6 +25,7 @@ const RootElement = () => {
                 setIsOpen={setIsOpen}
             />
             <Outlet />
+            <Footer />
         </>
     )
 }

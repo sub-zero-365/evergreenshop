@@ -31,8 +31,8 @@ export default function ShoppingCart({ id = 1, total }) {
                         className='flex text-start flex-col gap-y-1 items-center- justify-center-'
                     >
                         <h3
-                            className='uppercase text-xl mb-1 font-bold text-black'
-                        >ODyssey ii</h3>
+                            className='uppercase line-clamp-2 text-xl mb-1 font-bold text-black'
+                        >Binoid Delta 8 Rechargeable Disposable Vapes</h3>
                         <p
                             className='font-medium lg:hidden  uppercase leading-tight text-gray-500 text-sm'
                         >
@@ -45,7 +45,7 @@ export default function ShoppingCart({ id = 1, total }) {
                         </p>
                         <span
                             onClick={() => dispatch(removeFromCart(id))}
-                            className='text-rose-700 uppercase text-xs font-medium lg:hidden '
+                            className='text-rose-700 cursor-pointer uppercase text-xs font-medium lg:hidden '
                         >
                             remove
                         </span>
@@ -81,7 +81,7 @@ export default function ShoppingCart({ id = 1, total }) {
                     </p>
                     <span
                         onClick={() => dispatch(removeFromCart(id))}
-                        className='text-rose-700 uppercase text-xs font-medium hidden lg:block '
+                        className='text-rose-700 uppercase cursor-pointer text-xs font-medium hidden lg:block '
                     >
                         remove
                     </span>

@@ -11,59 +11,22 @@ import ShoppingCart from './ShoppingCart'
 import { data } from '../constants/demoData'
 import { useSelector, useDispatch } from 'react-redux'
 import { calculateTotal, clearCart } from '../actions/cartItems'
+import EmptyCart from './EmptyCart'
 
-const variants = {
-    "show": {
-        opacity: 1
-        , y: 0
-        ,
-        transition: {
-            duration: 1
-        }
-    },
-    "hidden": {
-        opacity: 0,
-        y: 200
 
-    }
-}
 const CartModal = () => {
     const { isOpen: active, close } = useToggleCartSlider()
 
-    const { cartItem, amount, total } = useSelector(state => state.cartItems)
+    const { cartItem, amount } = useSelector(state => state.cartItems)
+    const iscartempty = cartItem?.length > 0
+    
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(calculateTotal())
     }, [cartItem, amount])
-    const iscartempty = cartItem?.length > 0
     const navigate = useNavigate()
     
-    const EmptyCart = () => {
-        const navigate = useNavigate()
-        return (
-            <motion.div
-                animate="show"
-                initial="hidden"
-                variants={variants}
-                className=' w-full  h-full  flex-none'>
-                <img
-                    src='https://media.tenor.com/xzM6oRwPFrMAAAAj/rolling-jackass.gif'
-                    className='mx-auto block'
-                />
-                <h1 className='text-lg text-center py-10  '>
-                    Your Card is empty
-                </h1>
-                <Button
-                    className="mx-auto block !w-[min(400px,calc(100%-20px))]  !bg-black !py-3.5 !rounded-full "
-                    onClick={() => {
-                        close()
-                        navigate("/")
-                    }}
-                    title="go to store"
-                />
-            </motion.div>
-        )
-    }
+  
 
     return (
         <>
@@ -134,7 +97,7 @@ w-full md:flex- md:max-w-3xl md:rounded-lg mx-auto fixed-- -bg-white rounded-t-2
 
                                 <Button title="Place Order"
                                     onClick={() => {
-                                        // navigate("/shopping-bag")
+                                        navigate("/shopping-bag")
                                         close()
                                     }}
                                     className="

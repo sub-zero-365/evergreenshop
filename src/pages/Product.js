@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 import { data } from '../constants/demoData';
 import Heading from "../components/Heading"
 import Button from "../components/Button"
@@ -6,6 +6,7 @@ import { FreeMode, Navigation, Pagination, Scrollbar, A11y, Autoplay, Thumbs } f
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useState, useRef } from 'react'
 import ReactStars from 'react-rating-stars-component'
+import { addToCart, removeFromCart, increaseItem, decreaseItem } from '../actions/cartItems'
 import Select from 'react-select'
 import "swiper/css"
 import "swiper/css/navigation"
@@ -19,82 +20,137 @@ import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "swiper/css/scrollbar"
 import ProductCart from '../components/ProductCart';
-
+// import ReactStars from "react-rating-stars-component";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import ImageSlider from "../components/ImageSlider";
+import useItem from "../utils/checkInCart";
+import { useDispatch } from "react-redux";
 export const loader = ({ params }) => {
-
     const isProduct = data.find((elm) => elm.id == params.id)
+    console.log(isProduct)
     if (!isProduct) throw new Error("no items with id")
     return isProduct
 
 }
 
 const Product = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
-    // const data = useLoaderData()
+    const productdata = useLoaderData()
+
+    const { productname, price, id, total } = productdata
+    const { incart } = useItem(id)
+    const [product, setProduct] = useState(productdata)
+
+
+    const incrementCounter = () => {
+        const total = product.total + 1
+        setProduct(prev => ({ ...prev, total }))
+    }
+    const decrementCounter = () => {
+        const total = product.total - 1
+        setProduct(prev => ({ ...prev, total }))
+    }
     return (
         <div>
 
             <div className="container mx-auto lg:grid grid-cols-2 items-start ">
 
                 <div
-                    className="border "
+                    className=" "
 
                 >
-                    {/* swiper container here */}
+
                     <ImageSlider />
                 </div>
                 <div
-                    className="border "
+                    className=""
 
                 >
 
                     <div className="px-2">
-
+                        <div className=" flex  items-center gap-5">
+                            <ReactStars
+                                count={5}
+                                size={24}
+                                activeColor="#ffd700"
+                                edit={false}
+                                value={4}
+                            />
+                            <p className="">
+                                270 Reviews</p>
+                        </div>
                         <Heading
                             className=""
-                            text={"Indicar 4202"}
+                            text={productname || "Binoid Delta 8 THC Vape Cartridges – Bundle"}
                         />
                         <Heading
                             className="!text-xl !py-1 !font-bold !text-start"
-                            text={"$549,9"}
+                            text={`$${price}`}
                         />
                         <Heading
                             className="!text-xl !text-rose-800 line-through !py-1 !font-bold !text-start"
                             text={"$549,9"}
                         />
                         {/* start of buttons  */}
-                        <div className="flex items-center space-x-1">
-                            <div
-                                className='flex border space-x-2.5  items-center  px-4 py-1.5 rounded-full   '
-                            >
-                                <span>
-
-                                    <AiOutlineMinus
-                                        size={16}
-                                    />
-                                </span>
-                                <span>2</span>
-                                <span>
-                                    <AiOutlinePlus
-                                        size={16}
-                                    />
-                                </span>
-                            </div>
-                            <Button
-                                title="add to cart"
+                        {
+                            incart ? <Button
+                                title="remove from cart"
                                 className="!block !flex-1  !mx-auto  hover:!bg-blue-400
-!rounded-full !bg-black !text-sm !font-bold uppercase !py-3 !transition-all !duration-[0.5s] md:!text-sm  !w-[min(30rem,calc(100%-2rem))]
+!rounded-full !bg-rose-700 !text-sm !font-bold uppercase !py-3 !transition-all !duration-[0.5s] md:!text-sm  !w-[min(30rem,calc(100%-2rem))]
 "
                                 onClick={e => {
                                     e.stopPropagation()
-                                    // dispatch(addToCart(item))
+                                    dispatch(removeFromCart(id))
                                 }}
-                            />
+                            /> : <div className="flex items-center space-x-1">
+                                <div
+                                    className='flex  space-x-2.5  items-center  px-4 py-1.5 rounded-full   '
+                                >
+                                    <span>
 
-                        </div>
+                                        <AiOutlineMinus
+                                            onClick={() => decrementCounter()}
+
+                                            size={16}
+                                        />
+                                    </span>
+                                    <span>{product?.total}</span>
+                                    <span>
+                                        <AiOutlinePlus
+                                            onClick={() => incrementCounter()}
+
+                                            size={16}
+                                        />
+                                    </span>
+                                </div>
+                                <Button
+                                    title="add to cart"
+                                    className="!block !flex-1  !mx-auto  hover:!bg-blue-400
+!rounded-full !bg-black !text-sm !font-bold uppercase !py-3 !transition-all !duration-[0.5s] md:!text-sm  !w-[min(30rem,calc(100%-2rem))]
+"
+                                    onClick={e => {
+                                        e.stopPropagation()
+                                        dispatch(addToCart(product))
+                                    }}
+                                />
+
+                            </div>
+
+                        }
+                        <Button
+                            title="View Cart"
+                            className="!block !flex-1 !mt-6 !mx-auto  hover:!bg-blue-400
+!rounded-full !bg-green-600 !text-sm !font-bold uppercase !py-3 !transition-all !duration-[0.5s] md:!text-sm  !w-[min(30rem,calc(100%-2rem))]
+"
+                            onClick={e => {
+                                e.stopPropagation()
+                                navigate("/shopping-bag")
+                            }}
+                        />
                     </div>
 
                     {/* product detail container here */}
@@ -111,14 +167,14 @@ const Product = () => {
 
                             modules={[FreeMode, Navigation, Thumbs, Scrollbar]}
                             className="mySwiper mt-4"
-                        breakpoints={{
-                            640: {
-                                slidesPerView: 3,
-                            },
-                            786: {
-                                slidesPerView: 3,
-                            },
-                        }}
+                            breakpoints={{
+                                640: {
+                                    slidesPerView: 3,
+                                },
+                                786: {
+                                    slidesPerView: 3,
+                                },
+                            }}
                         >
                             {["Product Details", "Reviews", "Contact seller"].map((item, index) => (<SwiperSlide
                                 key={index}
@@ -180,7 +236,7 @@ const Product = () => {
                             </div>
                         </SwiperSlide>
                         <SwiperSlide >
-                            <div className="border  flex flex-col pt-5 ">
+                            <div className="  flex flex-col pt-5 ">
                                 <h2 className="text-montserrat text-lg text-center font-medium w-[400px] max-w-[calc(100%-2.5rem)] mx-auto mb-2 ">Write A Recieve about product</h2>
 
                                 <form className="mx-4 my-10 mt-4 shadow pb-8 ">
@@ -264,7 +320,7 @@ const Product = () => {
                         }
                     />)}
                 </div>
-                
+
             </section>
         </div>
     )

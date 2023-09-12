@@ -17,6 +17,7 @@ const variants = {
         y: 100, opacity: 0.3
     }
 }
+
 const ProductCart = (props) => {
     const { id = 1, className } = props
     const navigate = useNavigate()
@@ -28,13 +29,19 @@ const ProductCart = (props) => {
     const { incart } = useItem(id)
     return (
         <motion.div
-            onClick={() => navigate("/product/2")}
-            className={`productcart py-2 group flex-none w-full max-w-sm ${className}`}
+            onClick={() => navigate("/product/" + id)}
+            className={`productcart py-2 relative group flex-none w-full max-w-sm ${className}`}
             variants={variants}
             initial="hidden"
             whileInView="show"
 
         >
+            <div className='absolute left-0 top-0 z-10'>
+                <Button
+                    title="10% off"
+                    className="!px-2  !rounded-lg !text-xs !bg-[#652fb7] !uppercase"
+                />
+            </div>
 
             <Swiper className="mySwiper"
 
@@ -99,7 +106,7 @@ const ProductCart = (props) => {
                 {
                     incart ? <Button
                         title="remove from cart"
-                        className="!block lg:translate-y-10 lg:opacity-0 group-[:hover]:opacity-100  group-[:hover]:translate-y-0 !mx-auto !w-full hover:!bg-rose-900
+                        className="!block cursor-pointer lg:translate-y-10 lg:opacity-0 group-[:hover]:opacity-100  group-[:hover]:translate-y-0 !mx-auto !w-full hover:!bg-rose-900
 !rounded-full !bg-rose-800 !text-xs !py-3 !transition-all !duration-[0.5s] md:!text-sm  group-[:hover]:visible lg:invisible
 
 "

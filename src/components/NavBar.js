@@ -6,17 +6,30 @@ import { motion } from 'framer-motion'
 import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai'
 import { BsBag, BsPersonFill, BsSearch } from 'react-icons/bs'
 import Select from 'react-select'
-import { Link } from 'react-router-dom';
+import { Link, useFetcher, useLinkClickHandler } from 'react-router-dom';
 import useToggleCartSlider from '../utils/useToggleCartSlider';
 import { useSelector } from 'react-redux';
-const NavBar = ({setIsOpen }) => {
+import { useLocation } from 'react-router-dom';
+const NavBar = ({ setIsOpen }) => {
+    const location = useLocation();
+    const [isNotShoppingCart, setIsNotShoppingCart] = useState(false)
+    useEffect(() => {
+        const path = location.pathname.substring(1)
+        // console.log(location.pathname.substring(1))
+        if (path == "shopping-bag") {
+            setIsNotShoppingCart(true)
+        } else {
+            setIsNotShoppingCart(false)
+        }
+
+    }, [location.pathname])
     const { open } = useToggleCartSlider()
     const { totalAmount } = useSelector(state => state.cartItems)
     const [isCartEmpty, setIsCartEmpty] = useState(false)
     useEffect(() => {
         if (totalAmount > 0) {
             setIsCartEmpty(true)
-        }else{
+        } else {
             setIsCartEmpty(false)
         }
     }, [totalAmount])
@@ -202,28 +215,33 @@ const NavBar = ({setIsOpen }) => {
 
                             </div>
                         </motion.div>
-                        <motion.div
+                        {
+                        !isNotShoppingCart&&<motion.div
 
-                            className='cursor-pointer lg:border-l px-1 lg:px-3 border-[#7d7d7d] '>
-                            <motion.div className='relative'
-                                whileHover={{
-                                    scale: 1.2
-                                }}
-                            >
-                                {
-                                    isCartEmpty && <div
-                                        className='w-2.5 h-2.5 bg-rose-800 rounded-full right-0 absolute -top-0.5' />
-                                }
+                        className='cursor-pointer lg:border-l px-1 lg:px-3 border-[#7d7d7d] '>
+                        <motion.div className='relative'
+                            whileHover={{
+                                scale: 1.2
+                            }}
+                        >
+                            {
+                                isCartEmpty && <div
+                                    className='w-2.5 h-2.5 bg-rose-800 rounded-full right-0 absolute -top-0.5' />
+                            }
 
-
-                                <BsBag
-                                    onClick={() => open()}
+                          <BsBag
+                                    onClick={() => {
+                                        open()
+                                    }}
                                     className='text-gray-700'
                                     size={20}
                                 />
 
-                            </motion.div>
+                           
                         </motion.div>
+                    </motion.div>
+                        }
+                   
 
                     </div>
 

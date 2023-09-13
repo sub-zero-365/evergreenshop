@@ -1,6 +1,6 @@
 import React from 'react'
 import { forwardRef } from 'react'
-const Button = forwardRef(({className, title,
+const Button = forwardRef(({ className, title, children,
   ...props
 
 }, ref) => {
@@ -31,9 +31,9 @@ const Button = forwardRef(({className, title,
                 
                 `
       }
-      // onClick={onClick}
+    // onClick={onClick}
     >
-      {title}
+      {children ?? title}
     </button>
   )
 })

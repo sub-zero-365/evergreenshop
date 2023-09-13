@@ -3,9 +3,9 @@ import { addToCart, removeFromCart, increaseItem, decreaseItem } from '../action
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
-export default function ShoppingCart({ id = 1, total }) {
+export default function ShoppingCart({ id = 1, total, price }) {
     const dispatch = useDispatch()
-    
+
     const incrementCounter = (id) => {
         dispatch(increaseItem(id))
     }
@@ -36,7 +36,7 @@ export default function ShoppingCart({ id = 1, total }) {
                         <p
                             className='font-medium lg:hidden  uppercase leading-tight text-gray-500 text-sm'
                         >
-                            fcfa172,743.00
+                            ${price * total}
                         </p>
                         <p
                             className='font-medium -mt-0.5 uppercase text-black leading-tight text-sm'
@@ -77,7 +77,7 @@ export default function ShoppingCart({ id = 1, total }) {
                     <p
                         className='font-medium hidden lg:block uppercase leading-tight text-gray-500 text-sm'
                     >
-                        fcfa172,743.00
+                        ${price * total}
                     </p>
                     <span
                         onClick={() => dispatch(removeFromCart(id))}

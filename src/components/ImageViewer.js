@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {motion} from 'framer-motion'
 export default function ImageMagnifier({
     src,
     width,
@@ -85,7 +86,7 @@ export default function ImageMagnifier({
                 alt={"img"}
             />
 
-            <div
+            <motion.div
                 onContextMenu={() => false}
 
                 style={{
@@ -111,10 +112,14 @@ export default function ImageMagnifier({
                         }px`,
 
                     //calculate position of zoomed image.
+                    // backgroundPositionX: `${-x * zoomLevel + magnifieWidth / 2}px`,
+                    // backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`
+                }}
+                animate={{
                     backgroundPositionX: `${-x * zoomLevel + magnifieWidth / 2}px`,
                     backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`
                 }}
-            ></div>
+            ></motion.div>
         </div>
     );
 }

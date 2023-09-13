@@ -5,22 +5,27 @@ import Button from './Button';
 import { motion } from 'framer-motion'
 import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai'
 import { BsBag, BsPersonFill, BsSearch } from 'react-icons/bs'
-import Select from 'react-select'
-import { Link, useFetcher, useLinkClickHandler } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useToggleCartSlider from '../utils/useToggleCartSlider';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import Heading from './Heading';
+import { FiChevronDown } from 'react-icons/fi';
+
+
 const NavBar = ({ setIsOpen }) => {
     const location = useLocation();
+    const path = location.pathname.substring(1)
     const [isNotShoppingCart, setIsNotShoppingCart] = useState(false)
     useEffect(() => {
-        const path = location.pathname.substring(1)
+
         // console.log(location.pathname.substring(1))
         if (path == "shopping-bag") {
             setIsNotShoppingCart(true)
         } else {
             setIsNotShoppingCart(false)
         }
+        if (toggle) setToggle(false)
 
     }, [location.pathname])
     const { open } = useToggleCartSlider()
@@ -33,6 +38,7 @@ const NavBar = ({ setIsOpen }) => {
             setIsCartEmpty(false)
         }
     }, [totalAmount])
+    const [text, setText] = useState("")
     const [toggle, setToggle] = useState(false)
     const style = {
         control: base => ({
@@ -50,20 +56,8 @@ const NavBar = ({ setIsOpen }) => {
         )
 
     }
-    const options = [
-        {
-            label: "all",
-            value: "all"
-        },
-        {
-            label: "cannabis oil",
-            value: "cananbis-oil"
-        },
-        {
-            label: "some other",
-            value: "odo"
-        },
-    ]
+    const navigate = useNavigate()
+
     return (
         <>
             <div
@@ -93,65 +87,84 @@ const NavBar = ({ setIsOpen }) => {
                 </Swiper>
             </div>
 
-            <div className='min-h-[5rem] sticky z-50 top-0 right-0 w-full bg-white shadow  '>
-                <div className='container 
-                relative lg:static
-                py-2 mx-auto lg:px-24 
-                w-full flex justify-between items-center gap-x-2'>
+            <div className=' sticky z-50 top-0 right-0 w-full bg-white shadow  '>
+                <div className='
+                relative lg:relative
+                 mx-auto lg:px-8
+                w-full flex justify-between items-stretch gap-x-2'>
 
-                    <div className='flex lg:hidden'>
-                        <motion.div
-
-                            className='cursor-pointer flex space-x-2 items-center    px-3 text-[#7d7d7d] '>
-                            <motion.div
-                                whileHover={{
-                                    scale: 1.2
-                                }}
-                            >
-                                <AiOutlineMenu
-                                    onClick={() => setIsOpen(true)}
-                                    className='text-gray-700'
-                                    size={25}
-                                />
-
-                            </motion.div>
-                            <h3 className='text-sm'>MENU</h3>
-                        </motion.div>
-                    </div>
+                    
                     <Link to="/"
 
                         className=' '
                     >
 
                         <img
-                            className='max-w-[15rem] w-full '
+                            className='max-w-[15rem] w-full h-[4rem]'
                             src='https://evergreenhouseshop.com/wp-content/uploads/2023/04/Untitled-4-1.png'
                         />
                     </Link>
-                    <div className=' flex-1 max-w-lg hidden lg:block'>
-                        <div
-                            className='flex items-center space-x-3 w-full'
-                        >
-                            <div className="h-[35px] ">
-                                <Select
-                                    components={{ IndicatorSeparator: () => null }}
-                                    styles={style}
-                                    options={options} />
-                            </div>
-                            <div className='form-group flex-1'>
-                                <input
-                                    type='search'
-                                    placeholder='Search...'
-                                    className='w-full flex-1 border outline-gray-500  px-4 rounded-full min-h-[40px] text-xs lg:text-sm hover:outline-none focus:outline-none bg-gray-100'
+                    <div className=' flex-1  hidden lg:flex items-stretch justify-center '>
+                        {
+                            Array.from({ length: 3 }, (arr, index) => <div className='links-container group relative  px-2'>
+                                <div className='flex space-x-2 items-center'>
+                                    <Heading text="shop inside & coal "
+                                        className="!text-lg !text-start group-hover:text-[#02b362] cursor-pointer"
+                                    />
+                                    <FiChevronDown
+                                        size={20}
+                                        className="group-hover:rotate-180
+                                group-hover:text-[#02b362]
+                                transition-all duration-700"
+                                    />
+
+                                </div>
+                                <div
+                                    className='absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] w-0 group-[:hover]:w-full duration-300 transition-all bottom-0'
+                                />
+                                <ul className='absolute left-0  rounded-b-xl min-w-max  group-hover:pb-6
+                        overflow-hidden max-h-0 group-hover:max-h-screen  transition-all duration-700
+                        top-[calc(100%+0.25rem)] bg-white px-2 pr-8'>
+                                    {
+                                        Array.from({ length: 10 }, (arr, index) => <li
+                                            className='pb-1.5 capitalize hover:text-[#02b362] cursor-pointer font-[600]'
+                                        >view the shop inside</li>)
+
+                                    }
+
+                                </ul>
+
+                            </div>)
+
+                        }
+                        <div className='links-container group relative  px-2'>
+                            <div className='flex space-x-2 items-center'>
+                                <Heading text="Strains "
+                                    className="!text-lg !text-start group-hover:text-[#02b362] cursor-pointer"
                                 />
                             </div>
+                            <div
+                                className='absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] w-0 group-[:hover]:w-full duration-300 transition-all bottom-0'
+                            />
+
+                        </div>
+                        <div className='links-container group relative  px-2'>
+                            <div className='flex space-x-2 items-center'>
+                                <Heading text="Recipe"
+                                    className="!text-lg !text-start group-hover:text-[#02b362] cursor-pointer"
+                                />
+                            </div>
+                            <div
+                                className='absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] w-0 group-[:hover]:w-full duration-300 transition-all bottom-0'
+                            />
+
                         </div>
                     </div>
                     {/* user info here */}
-                    <div className='flex items-center '>
+                    <div className='flex items-center space-x-2 lg:space-x-2.5  '>
                         <motion.div
 
-                            className='cursor-pointer lg:hidden lg:border-l px-1 lg:px-3 border-[#7d7d7d] '>
+                            className='cursor-pointer    border-[#7d7d7d] '>
                             <motion.div
                                 whileHover={{
                                     scale: 1.2
@@ -161,7 +174,7 @@ const NavBar = ({ setIsOpen }) => {
                                     !toggle ?
                                         <BsSearch
                                             onClick={() => setToggle(true)}
-                                            className='text-gray-700'
+                                            className='text-[#9773ce]'
                                             size={20}
                                         />
                                         : <AiOutlineClose
@@ -175,7 +188,7 @@ const NavBar = ({ setIsOpen }) => {
                         </motion.div>
                         <motion.div
 
-                            className='cursor-pointer group relative lg:border-l px-1 lg:px-3 border-[#7d7d7d] '>
+                            className='cursor-pointer group relative   border-[#7d7d7d] '>
                             <motion.div
                                 whileHover={{
                                     scale: 1.2
@@ -195,6 +208,7 @@ const NavBar = ({ setIsOpen }) => {
                                     className='flex flex-col gap-y-4 w-full'
                                 >
                                     <Button
+                                    onClick={()=>navigate("/auth")}
                                         title="log in "
                                         className="!block break-keep flex-1 
                                     !rounded-full !py-3 !px-4  !text-xs !min-w-[100px]
@@ -216,53 +230,78 @@ const NavBar = ({ setIsOpen }) => {
                             </div>
                         </motion.div>
                         {
-                        !isNotShoppingCart&&<motion.div
+                            !isNotShoppingCart && <motion.div
 
-                        className='cursor-pointer lg:border-l px-1 lg:px-3 border-[#7d7d7d] '>
-                        <motion.div className='relative'
-                            whileHover={{
-                                scale: 1.2
-                            }}
-                        >
-                            {
-                                isCartEmpty && <div
-                                    className='w-2.5 h-2.5 bg-rose-800 rounded-full right-0 absolute -top-0.5' />
-                            }
-
-                          <BsBag
-                                    onClick={() => {
-                                        open()
+                                className='cursor-pointer   border-[#7d7d7d] '>
+                                <motion.div className='relative'
+                                    whileHover={{
+                                        scale: 1.2
                                     }}
-                                    className='text-gray-700'
-                                    size={20}
-                                />
+                                >
+                                    {
+                                        isCartEmpty && <div
+                                            className='w-2.5 h-2.5 bg-rose-800 rounded-full right-0 absolute -top-0.5' />
+                                    }
 
-                           
-                        </motion.div>
-                    </motion.div>
+                                    <BsBag
+                                        onClick={() => {
+                                            open()
+                                        }}
+                                        className='text-gray-700'
+                                        size={20}
+                                    />
+
+
+                                </motion.div>
+                            </motion.div>
                         }
-                   
+<div className='flex lg:hidden'>
+                        <motion.div
+
+                            className='cursor-pointer flex space-x-2 items-stretch ml-1    px-3 text-[#7d7d7d] '>
+                            <motion.div
+                                whileHover={{
+                                    scale: 1.2
+                                }}
+                            >
+                                <AiOutlineMenu
+                                    onClick={() => setIsOpen(true)}
+                                    className='text-gray-700'
+                                    size={25}
+                                />
+                            </motion.div>
+                        </motion.div>
+                    </div>
 
                     </div>
 
                     <div
-                        className={`absolute ${toggle ? "visible pointer-events-auto opacity-100" : "invsible pointer-events-none opacity-0"} duration-700 transition-all left-0 lg:hidden right-0 py-6 border top-full  bg-white`}
+                        className={`absolute bg-[#f7f7f7] lg:px-24 px-4 ${toggle ? "visible pointer-events-auto opacity-100" : "invsible pointer-events-none opacity-0"} duration-700 transition-all left-0  right-0 py-4 border top-full  bg-white`}
                     >
                         <div
-                            className='flex items-center space-x-3 w-full'
+                            className='flex pl-2 lg:pl-3 items-center border space-x-3 hover:outline-none focus:outline-none bg-white w-full '
                         >
-                            <div className="h-[35px] ">
-                                <Select
-                                    components={{ IndicatorSeparator: () => null }}
-                                    styles={style}
-                                    options={options} />
-                            </div>
-                            <div className='form-group flex-1'>
-                                <input
-                                    placeholder='Search...'
-                                    className='w-full flex-1 border outline-gray-500  px-4 rounded-full min-h-[40px] text-xs lg:text-sm hover:outline-none focus:outline-none bg-gray-100'
+                            <BsSearch
+                                size={20}
+                            />
+                            <form
+                                onSubmit={e => {
+                                    e.preventDefault()
+                                    setToggle(false)
+                                    setText("")
+                                    navigate(`/product-category/${text || "no"}?search=${text}&rd_from=${path}`)
+                                }}
+                                className='form-group flex-1   '>
+
+                                <input required
+                                    onChange={(e) => {
+                                        setText(e.target.value)
+                                    }}
+
+                                    placeholder='Search For Products ...'
+                                    className='w-full flex-1 outline-none   px-4 rounded-sm min-h-[45px] text-xs lg:text-sm '
                                 />
-                            </div>
+                            </form>
                         </div>
 
                         {/* result of seaec here */}

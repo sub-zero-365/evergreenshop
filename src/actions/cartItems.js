@@ -36,8 +36,7 @@ const cartSlice = createSlice({
         decreaseItem(state, { payload }) {
             const item=state.cartItem
             const isItem = item.find(({ id }) => id == payload);
-            console.log(isItem, payload)
-            if (isItem?.total ?? isItem?.total <= 1) return
+            if (isItem?.total <= 1) return
             isItem.total -= 1
         },
         removeFromCart(state, { payload }) {

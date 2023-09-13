@@ -1,5 +1,5 @@
 
-const Slider = ({ children, active, setActive, className,className2 }) => {
+const Slider = ({ children, active, setActive, className, className2, direction }) => {
     return (
         <div
             onClick={e => setActive()}
@@ -9,10 +9,9 @@ const Slider = ({ children, active, setActive, className,className2 }) => {
         >
             <div
                 onClick={e => e.stopPropagation()}
-
                 className={`absolute shadow   w-[min(300px,calc(100vw-30px))] bg-white h-full
-                group-[.active]:right-0 transition-[right]  duration-500
-                -right-full z-10 ${className2}`}
+                ${direction ? "group-[.active]:left-0 transition-[left] -left-full" : "group-[.active]:right-0 -right-full transition-[right]"}    duration-500
+                 z-10 ${className2}`}
             >
                 {children}
             </div>

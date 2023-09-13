@@ -6,36 +6,30 @@ import { motion } from 'framer-motion'
 import { BsFacebook, BsInstagram } from 'react-icons/bs'
 import { AiFillTwitterCircle, AiOutlineClose } from 'react-icons/ai'
 import Button from './Button'
-const style = {
-    control: base => ({
-        ...base,
-        border: "1px solid gray",
-        boxShadow: "none",
-        background: "transparent",
-        borderRadius: 9999,
-        fontSize: 0.7 + "rem",
-        cursor: "pointer",
-        height: "20px!important",
-        padding: "0px"
+const parent = {
+    initial: false,
+    animate: {
+        transition: {
+            // delay: 0.5,
+            staggerChildren: 0.1
+        }
 
     }
-    )
-
 }
-const options = [
-    {
-        label: "all",
-        value: "all"
+
+const singleword = {
+    initial: {
+        x: 200,
+        opacity: 0.6,
+        scale: 0.7
     },
-    {
-        label: "cannabis oil",
-        value: "cananbis-oil"
-    },
-    {
-        label: "some other",
-        value: "odo"
-    },
-]
+    animate: {
+        opacity: 1, x: 0, scale: 1
+        , transition: {
+            duration: 0.08
+        }
+    }
+}
 
 const PopOver = ({ children }) => {
 
@@ -69,13 +63,15 @@ const SideBar = ({ isOpen, setIsOpen }) => {
                 className={`absolute 
                 
                 
-                transition-[left] duration-500
-                ${isOpen ? "left-0" : " -left-full"} w-[min(400px,calc(100%-60px))] border top-0 h-full bg-white`}
+                transition-[right] duration-500
+                ${isOpen ? "right-0" : " -right-full"} w-[min(15rem,calc(100%-60px))] border top-0 h-full bg-white`}
             >
                 <div className='flex flex-col justify-between h-full'>
 
-                    <div className='w-[3.5rem] border top-0  absolute -right-[3.5rem] h-[3.5rem] hover:border-none hover:bg-red-700 hover:text-white text-red-800 flex items-center justify-center'>
-                        <AiOutlineClose onClick={() => setIsOpen(false)}
+                    <div className='w-[3.5rem]  border top-0  absolute -left-[3.5rem] h-[3.5rem] hover:border-none hover:bg-red-700 hover:text-white text-red-800 flex items-center justify-center'>
+                        <AiOutlineClose
+                            className={`${isOpen ? "rotate-[360deg] delay-[0.2s]" : "rotate-0"} duration-500 transition-all`}
+                            onClick={() => setIsOpen(false)}
                             size={25}
                         />
 
@@ -93,8 +89,15 @@ const SideBar = ({ isOpen, setIsOpen }) => {
                         </Link>
 
 
-                        <ul className=''>
-                            <li
+                        <motion.ul
+
+                            variants={parent}
+                            initial="initial"
+                            whileInView="animate"
+                            className='overflow-hidden'>
+                            <motion.li
+                                variants={singleword}
+
                                 className='py-3 uppercase
 hover:bg-slate-100 transition-colors duration-500
 border-b px-4 text-gray-700 hover:font-medium text-sm'
@@ -106,8 +109,11 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Home
                                 </NavLink>
-                            </li>
-                            <li
+                            </motion.li>
+                            <motion.li
+
+                                variants={singleword}
+
                                 className='py-3 uppercase
 hover:bg-slate-100 transition-colors duration-500
 border-b px-4 text-gray-700 hover:font-medium text-sm'
@@ -118,8 +124,10 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     About
                                 </NavLink>
-                            </li>
-                            <li
+                            </motion.li>
+                            <motion.li
+                                variants={singleword}
+
                                 className='py-3 uppercase
 hover:bg-slate-100 transition-colors duration-500
 border-b px-4 text-gray-700 hover:font-medium text-sm'
@@ -130,8 +138,10 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Flower
                                 </NavLink>
-                            </li>
-                            <li
+                            </motion.li>
+                            <motion.li
+                                variants={singleword}
+
                                 className='py-3 uppercase
 hover:bg-slate-100 transition-colors duration-500
 border-b px-4 text-gray-700 hover:font-medium text-sm'
@@ -142,8 +152,10 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Bloq
                                 </NavLink>
-                            </li>
-                            <li
+                            </motion.li>
+                            <motion.li
+                                variants={singleword}
+
                                 className='py-3 uppercase
     hover:bg-slate-100 transition-colors duration-500
     border-b px-4 text-gray-700 hover:font-medium text-sm'
@@ -153,7 +165,7 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                         className="text-gray-400"
                                     /><p>News letter </p>
                                 </Link>
-                            </li>
+                            </motion.li>
                             <li
                                 className='flex py-4 space-x-1 flex-wrap  my-5 place-items-center justify-center'
                             >
@@ -214,7 +226,7 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 </div>
                             </li>
 
-                        </ul>
+                        </motion.ul>
                     </div>
                     <div className='mb-10 space-y-4'>
                         <Button

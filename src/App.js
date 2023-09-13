@@ -8,6 +8,10 @@ import ShoppingBag from './pages/ShoppingBag';
 import Shop from './pages/Shop';
 import ProductCart from './components/ProductCart';
 import ProductCategory, { loader as ProductCategoryLoader } from './pages/ProductCategory';
+import NotFound from './pages/NotFound';
+import Auth from './pages/Auth';
+import requireAurthed from './utils/requireAuth';
+import User,{loader as UserLoader} from './pages/User';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +47,20 @@ const router = createBrowserRouter([
         element: <Shop />,
 
       },
+      {
+        path: "auth",
+        element: <Auth />,
+      },
+      {
+        path: "user",
+        element: <User />,
+        loader: requireAurthed
+
+      },
     ]
+  }, {
+    path: "*",
+    element: <NotFound />
   }
 ])
 function App() {

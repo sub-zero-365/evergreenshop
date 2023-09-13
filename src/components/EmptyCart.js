@@ -38,9 +38,9 @@ const EmptyCart = () => {
                 className="mx-auto block !w-[min(400px,calc(100%-20px))]  !bg-black !py-3.5 !rounded-full "
                 onClick={() => {
                     close()
-                    navigate("/")
+                    navigate("/shop")
                 }}
-                title="go to store"
+                title="go to shop"
             />
         </motion.div>
     )

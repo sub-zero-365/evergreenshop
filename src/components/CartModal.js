@@ -19,14 +19,14 @@ const CartModal = () => {
 
     const { cartItem, amount } = useSelector(state => state.cartItems)
     const iscartempty = cartItem?.length > 0
-    
+
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(calculateTotal())
     }, [cartItem, amount])
     const navigate = useNavigate()
-    
-  
+
+
 
     return (
         <>
@@ -68,13 +68,20 @@ const CartModal = () => {
 
                         {
                             iscartempty ?
-                                cartItem.map((arr, index) => {
-                                    return (
-                                        <ShoppingCart key={index}
-                                            {...arr}
-                                        />
-                                    )
-                                }) : <EmptyCart />
+
+                                <AnimatePresence>
+                                    {
+                                        cartItem.map((arr, index) => {
+                                            return (
+                                                <ShoppingCart key={index}
+                                                    {...arr}
+                                                />
+                                            )
+                                        })}
+                                </AnimatePresence>
+
+
+                                : <EmptyCart />
 
                         }
 

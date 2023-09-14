@@ -4,7 +4,7 @@ import AnimatedText from '../components/AnimateText'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 import { FiInstagram } from 'react-icons/fi'
-
+import CustomAccordians from '../components/CustomAccordian';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -39,7 +39,10 @@ const Home = () => {
       onMouseMove={mouseMove}
 
     >
-
+      {/* <CustomAccordians>
+        <p>send the code and file</p>
+        <p>send the code and file</p>
+      </CustomAccordians> */}
 
       <motion.div
         transition={{ type: "spring", stiffness: 150 }}

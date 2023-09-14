@@ -2,8 +2,8 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { addToCart, removeFromCart, increaseItem, decreaseItem } from '../actions/cartItems'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-
-export default function ShoppingCart({ id = 1, total, price }) {
+import { motion } from 'framer-motion'
+export default function ShoppingCart({ id = 1, total, price, productname }) {
     const dispatch = useDispatch()
 
     const incrementCounter = (id) => {
@@ -13,7 +13,11 @@ export default function ShoppingCart({ id = 1, total, price }) {
         dispatch(decreaseItem(id))
     }
     return (
-        <div
+        <motion.div
+            key={`${id}-${productname}-${price}`}
+            initail={false}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ scale: 0.5, opacity: 0 }}
             className='border-[0.0925rem] border-[#e8e8e8]   w-full py-4 px-2 md:px-2.5 lg:px-3'
         >
             <div
@@ -32,7 +36,7 @@ export default function ShoppingCart({ id = 1, total, price }) {
                     >
                         <h3
                             className='uppercase line-clamp-2 text-xl mb-1 font-bold text-black'
-                        >Binoid Delta 8 Rechargeable Disposable Vapes</h3>
+                        >{productname || "n/a"}</h3>
                         <p
                             className='font-medium lg:hidden  uppercase leading-tight text-gray-500 text-sm'
                         >
@@ -88,6 +92,6 @@ export default function ShoppingCart({ id = 1, total, price }) {
 
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }

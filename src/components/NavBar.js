@@ -12,8 +12,10 @@ import { useLocation } from 'react-router-dom';
 import Heading from './Heading';
 import { FiChevronDown } from 'react-icons/fi';
 import { motion, useScroll, useSpring } from "framer-motion";
-
+import useCountry from '../components/GetCountry'
 const NavBar = ({ setIsOpen }) => {
+    const { countryName, countryCapital } = useCountry()
+
     const { scrollYProgress } = useScroll();
     const scaleX = useSpring(scrollYProgress, {
         stiffness: 100,
@@ -276,6 +278,17 @@ const NavBar = ({ setIsOpen }) => {
                                 </motion.div>
                             </motion.div>
                         }
+                        <div
+                            className="line-clamp-1 font-medium hidden sm:block"
+                        >
+                            {
+                                countryName
+                            },
+                            {
+                                countryCapital && `${countryCapital[0]}...`
+                            }
+                        </div>
+
                         <div className='flex lg:hidden'>
                             <motion.div
 

@@ -2,18 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { EffectCreative, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from './Button';
-import { motion } from 'framer-motion'
+// import { motion } from 'framer-motion'
 import { AiOutlineClose, AiOutlineMenu, AiOutlineUser } from 'react-icons/ai'
 import { BsBag, BsPersonFill, BsSearch } from 'react-icons/bs'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, NavLink } from 'react-router-dom';
 import useToggleCartSlider from '../utils/useToggleCartSlider';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Heading from './Heading';
 import { FiChevronDown } from 'react-icons/fi';
-
+import { motion, useScroll, useSpring } from "framer-motion";
 
 const NavBar = ({ setIsOpen }) => {
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
     const location = useLocation();
     const path = location.pathname.substring(1)
     const [isNotShoppingCart, setIsNotShoppingCart] = useState(false)
@@ -65,7 +71,7 @@ const NavBar = ({ setIsOpen }) => {
             >
                 <Swiper
                     modules={[Autoplay, Navigation]}
-                    navigation={true}
+                    // navigation={true}
                     autoplay={{
                         delay: 2500,
                         disableOnInteraction: false
@@ -93,14 +99,14 @@ const NavBar = ({ setIsOpen }) => {
                  mx-auto lg:px-8
                 w-full flex justify-between items-stretch gap-x-2'>
 
-                    
+
                     <Link to="/"
 
                         className=' '
                     >
 
                         <img
-                            className='max-w-[15rem] w-full h-[4rem]'
+                            className='max-w-[15rem] w-full h-[3.44rem]'
                             src='https://evergreenhouseshop.com/wp-content/uploads/2023/04/Untitled-4-1.png'
                         />
                     </Link>
@@ -139,9 +145,18 @@ const NavBar = ({ setIsOpen }) => {
                         }
                         <div className='links-container group relative  px-2'>
                             <div className='flex space-x-2 items-center'>
-                                <Heading text="Strains "
-                                    className="!text-lg !text-start group-hover:text-[#02b362] cursor-pointer"
-                                />
+                                <NavLink
+                                    to="/category/strains"
+                                >
+
+                                    {({ isActive }) => <> <Heading text="Strains"
+                                        className={`!text-lg !text-start ${isActive && "text-[#02b362]"} group-hover:text-[#02b362] cursor-pointer `}
+                                    />
+                                        <div
+                                            className={`absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] ${isActive && "bg-[#02b362] w-full"} w-0 group-[:hover]:w-full duration-300 transition-all bottom-0`}
+                                        /></>
+                                    }
+                                </NavLink>
                             </div>
                             <div
                                 className='absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] w-0 group-[:hover]:w-full duration-300 transition-all bottom-0'
@@ -150,13 +165,19 @@ const NavBar = ({ setIsOpen }) => {
                         </div>
                         <div className='links-container group relative  px-2'>
                             <div className='flex space-x-2 items-center'>
-                                <Heading text="Recipe"
-                                    className="!text-lg !text-start group-hover:text-[#02b362] cursor-pointer"
-                                />
+                                <NavLink
+                                    to="/category/recipes"
+                                >
+                                    {({ isActive }) => <> <Heading text="Recipes"
+                                        className={`!text-lg !text-start ${isActive && "text-[#02b362]"} group-hover:text-[#02b362] cursor-pointer `}
+                                    />
+                                        <div
+                                            className={`absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] ${isActive && "bg-[#02b362] w-full"} w-0 group-[:hover]:w-full duration-300 transition-all bottom-0`}
+                                        /></>
+                                    }
+                                </NavLink>
                             </div>
-                            <div
-                                className='absolute left-0 h-0.5 rounded-lg bg-gray-700 group-hover:bg-[#02b362] w-0 group-[:hover]:w-full duration-300 transition-all bottom-0'
-                            />
+
 
                         </div>
                     </div>
@@ -208,7 +229,7 @@ const NavBar = ({ setIsOpen }) => {
                                     className='flex flex-col gap-y-4 w-full'
                                 >
                                     <Button
-                                    onClick={()=>navigate("/auth")}
+                                        onClick={() => navigate("/auth")}
                                         title="log in "
                                         className="!block break-keep flex-1 
                                     !rounded-full !py-3 !px-4  !text-xs !min-w-[100px]
@@ -255,23 +276,23 @@ const NavBar = ({ setIsOpen }) => {
                                 </motion.div>
                             </motion.div>
                         }
-<div className='flex lg:hidden'>
-                        <motion.div
-
-                            className='cursor-pointer flex space-x-2 items-stretch ml-1    px-3 text-[#7d7d7d] '>
+                        <div className='flex lg:hidden'>
                             <motion.div
-                                whileHover={{
-                                    scale: 1.2
-                                }}
-                            >
-                                <AiOutlineMenu
-                                    onClick={() => setIsOpen(true)}
-                                    className='text-gray-700'
-                                    size={25}
-                                />
+
+                                className='cursor-pointer flex space-x-2 items-stretch ml-1    px-3 text-[#7d7d7d] '>
+                                <motion.div
+                                    whileHover={{
+                                        scale: 1.2
+                                    }}
+                                >
+                                    <AiOutlineMenu
+                                        onClick={() => setIsOpen(true)}
+                                        className='text-gray-700'
+                                        size={25}
+                                    />
+                                </motion.div>
                             </motion.div>
-                        </motion.div>
-                    </div>
+                        </div>
 
                     </div>
 
@@ -307,7 +328,10 @@ const NavBar = ({ setIsOpen }) => {
                         {/* result of seaec here */}
                     </div>
                 </div>
+                <motion.div className="bg-red-500" style={{ scaleX }} />
+
             </div>
+
         </>
     )
 }

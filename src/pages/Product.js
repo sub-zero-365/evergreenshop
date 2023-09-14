@@ -6,8 +6,9 @@ import { FreeMode, Navigation, Pagination, Scrollbar, A11y, Autoplay, Thumbs } f
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useState, useRef } from 'react'
 import ReactStars from 'react-rating-stars-component'
-import { addToCart, removeFromCart, increaseItem, decreaseItem } from '../actions/cartItems'
-import Select from 'react-select'
+import { addToCart, removeFromCart } from '../actions/cartItems'
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs"
+// import Select from 'react-select'
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
@@ -36,6 +37,7 @@ export const loader = ({ params }) => {
 const Product = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const [swiperRef, setSwiperRef] = useState(null);
 
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
@@ -44,7 +46,12 @@ const Product = () => {
     const { productname, price, id, total } = productdata
     const { incart } = useItem(id)
     const [product, setProduct] = useState(productdata)
-
+    const nextSlide = () => {
+        swiperRef.slideNext();
+    };
+    const prevSlide = () => {
+        swiperRef.slidePrev();
+    };
 
     const incrementCounter = () => {
         const total = product.total + 1
@@ -61,9 +68,7 @@ const Product = () => {
 
                 <div
                     className=" "
-
                 >
-
                     <ImageSlider />
                 </div>
                 <div
@@ -307,19 +312,83 @@ const Product = () => {
                     </Swiper>
                 </div>
             </div>
-            <section className='py-10'>
-                <Heading
-                    text={"Related Product"}
-                />
-                <div className=" flex flex-nowrap  lg:flex-wrap  lg:container lg:mx-auto gap-x-2 bg-white  overflow-x-auto overflow-y-hidden">
-                    {data?.map((arr, index) => <ProductCart
-                        className="rounded-md !max-w-[13rem] md:!max-w-[14rem]"
-                        key={index}
-                        {
-                        ...arr
-                        }
-                    />)}
+            <section className='py-10 max-w-6xl mx-auto'>
+                <div className="flex items-center justify-between px-2">
+                    <Heading
+                        className="!text-2xl"
+                        text={"Related Product"}
+                    />
+                    <div className="flex items-center justify-center space-x-2">
+                        <div className="flex items-center justify-center border p-2 hover:border-green-500 transtition duration-500  rounded-full border-gray-500">
+                            <BsArrowLeft
+                                onClick={prevSlide}
+                                size={25}
+                            />
+                        </div>
+                        <div className="flex items-center  justify-center border p-2 hover:border-green-500 transtition duration-500 rounded-full border-gray-500">
+                            <BsArrowRight
+                                onClick={nextSlide}
+                                size={25}
+                            />
+                        </div>
+
+                    </div>
+
                 </div>
+
+                <Swiper
+                    // loop={true}
+                    // spaceBetween={30}
+
+                    // effect='fade'
+                    speed= {1000}
+                    onSwiper={setSwiperRef}
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 3,
+                        },
+                        786: {
+                            slidesPerView: 4,
+                        },
+
+                    }}
+
+                    slidesPerView={1.8}
+
+                    pagination={true}
+                    modules={[Pagination, Autoplay]}
+                    className="mySwiper my-10">
+                    {
+
+                        data?.map((arr, index) => <SwiperSlide>
+                            {
+                                ({ isActive, isPrev }) =>
+                                    <ProductCart
+                                        className="rounded-md !max-w-[13rem] md:!max-w-[14rem]"
+                                        key={index}
+                                        {
+                                        ...arr
+                                        }
+                                    />
+
+                            }
+                        </SwiperSlide>)
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                </Swiper>
+
+
 
             </section>
         </div>

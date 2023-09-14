@@ -11,8 +11,9 @@ import ProductCategory, { loader as ProductCategoryLoader } from './pages/Produc
 import NotFound from './pages/NotFound';
 import Auth from './pages/Auth';
 import requireAurthed from './utils/requireAuth';
-import User,{loader as UserLoader} from './pages/User';
-
+import User, { loader as UserLoader } from './pages/User';
+import Strains from './pages/Strains'
+import Recipes from './pages/Recipes.js'
 const router = createBrowserRouter([
   {
     element: <RootElement />,
@@ -55,6 +56,18 @@ const router = createBrowserRouter([
         path: "user",
         element: <User />,
         loader: requireAurthed
+
+      },
+      {
+        path: "category/strains",
+        element: <Strains />,
+        // loader: requireAurthed
+
+      },
+      {
+        path: "category/recipes",
+        element: <Recipes />,
+        // loader: requireAurthed
 
       },
     ]

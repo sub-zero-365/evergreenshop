@@ -157,15 +157,32 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 variants={singleword}
 
                                 className='py-3 uppercase
-    hover:bg-slate-100 transition-colors duration-500
-    border-b px-4 text-gray-700 hover:font-medium text-sm'
+hover:bg-slate-100 transition-colors duration-500
+border-b px-4 text-gray-700 hover:font-medium text-sm'
                             >
-                                <Link className='flex space-x-3'>
-                                    <GrMailOption size={20}
-                                        className="text-gray-400"
-                                    /><p>News letter </p>
-                                </Link>
+                                <NavLink to="/category/strains"
+                                    className={({ isActive }) => isActive && "text-blue-600"}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Strains
+                                </NavLink>
                             </motion.li>
+                            <motion.li
+                                variants={singleword}
+
+                                className='py-3 uppercase
+hover:bg-slate-100 transition-colors duration-500
+border-b px-4 text-gray-700 hover:font-medium text-sm'
+                            >
+                                <NavLink to="/category/recipes"
+                                    className={({ isActive }) => isActive && "text-blue-600"}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Recipes
+                                    
+                                </NavLink>
+                            </motion.li>
+
                             <li
                                 className='flex py-4 space-x-1 flex-wrap  my-5 place-items-center justify-center'
                             >

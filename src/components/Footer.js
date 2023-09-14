@@ -4,7 +4,7 @@ import Heading from './Heading'
 const Footer = () => {
     return (
         <div
-            className='py-10 bg-[#333333]'
+            className='py-10 bg-[#333333] pb-24 lg:pb-10'
         >
             <div className='container lg:px-24 mx-auto gap-x-10 text-white flex lg:flex-row flex-col'>
                 <div className='flex-none'>

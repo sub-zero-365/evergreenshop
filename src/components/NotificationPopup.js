@@ -1,28 +1,43 @@
 
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { GoShare } from 'react-icons/go'
+import { Link } from 'react-router-dom'
 const NotificationPopUp = () => {
-    const timeRef = useRef(null)
-    const handleCancel = (e) => {
-        e.stopPropagation()
-        e.target.style.animationPlayState = "running"
-        clearTimeout(timeRef.current)
+    const TIME_OUT = 10000
+
+    useEffect(() => {
+        const timerRef = setInterval(() => {
+
+        }, TIME_OUT);
+        return () => {
+            clearInterval(timerRef)
+        }
+    }, [])
+
+
+
+    const notRef = useRef(null)
+    const handleCancel = () => {
+        notRef.current.style.animationPlayState = "paused"
     }
-    const handleMouseEnter = (e) => {
-        const target = e.target
-        clearTimeout(timeRef.current)
-        if (target) target.style.animationPlayState = "paused"
-        timeRef.current = setTimeout(() => {
-            if (target) target.style.animationPlayState = "running"
-            clearTimeout(timeRef.current)
-        }, 2000);
+
+    const onMouseEnter = () => {
+        notRef.current.style.animationPlayState = "paused"
+    }
+    const onMouseLeave = () => {
+        notRef.current.style.animationPlayState = "running"
+
     }
     return (
         <div
-            // onTouchStart={handleMouseEnter}
-            // onMouseEnter={handleMouseEnter}
 
+            onTouchStart={onMouseEnter}
+            onTouchEnd={onMouseLeave}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            ref={notRef}
+            to="shop?rd_from=popup"
             className='
-            
             popup
     py-1 pb-1.5 px-2 rounded-lg shadow-xl bg-white
     top-4
@@ -43,6 +58,7 @@ const NotificationPopUp = () => {
     gap-x-2
     '
         >
+
             <div className="w-24 flex-none h-24 rounded-full ">
                 <img
                     className='w-full h-full object-cover'
@@ -59,10 +75,13 @@ const NotificationPopUp = () => {
             </div>
             <div
                 onClick={handleCancel}
-                className='flex-none max-w-[40px] h-[40px] w-full border'>
-
+                className='flex-none grid place-items-center max-w-[40px] h-[40px] w-full '>
+                <GoShare
+                    size={25} />
             </div>
+
         </div>
+
     )
 }
 

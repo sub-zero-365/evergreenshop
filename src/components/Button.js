@@ -37,7 +37,7 @@ const Button = forwardRef(({ className, title, children,
     </button>
   )
 })
-export const ButtonDanger = ({ onClick, className, title }) => {
+export const ButtonDanger = ({ onClick, className, title, children }) => {
 
   return (
     <button
@@ -63,7 +63,7 @@ export const ButtonDanger = ({ onClick, className, title }) => {
       }
       onClick={onClick}
     >
-      {title}
+      {title || children}
     </button>
   )
 }

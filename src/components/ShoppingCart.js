@@ -1,11 +1,11 @@
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { addToCart, removeFromCart, increaseItem, decreaseItem } from '../actions/cartItems'
+import { removeFromCart, increaseItem, decreaseItem } from '../actions/cartItems'
 import { useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-export default function ShoppingCart({ id = 1, total, price, productname }) {
+import { AnimatePresence, motion } from 'framer-motion'
+import IncrementDecrementButton from "./IncrementDecrementButton";
+export default function ShoppingCart(props) {
+    const { _id: id = 1, total, product_price: price, product_name: productname, product_imgUrl } = props
     const dispatch = useDispatch()
-
     const incrementCounter = (id) => {
         dispatch(increaseItem(id))
     }
@@ -14,22 +14,33 @@ export default function ShoppingCart({ id = 1, total, price, productname }) {
     }
     return (
         <motion.div
-            key={`${id}-${productname}-${price}`}
-            initail={false}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            className='border-[0.0925rem] border-[#e8e8e8]   w-full py-4 px-2 md:px-2.5 lg:px-3'
+            key={props}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, }}
+            exit={{
+                scale: 0.5,
+                opacity: 0,
+                transition: {
+                    duration: 0.3,
+                    mass: 25,
+                    
+                }
+            }}
+            className={` border-[0.0925rem] select-none border-[#e8e8e8]   w-full py-4 px-2 md:px-2.5 lg:px-3 `}
         >
             <div
                 className='flex w-full h-full justify-between items-center'
             >
-
                 <div
                     className='flex items-center'
                 >
                     <img
                         className='w-20'
-                        src='https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629557120822.jpg'
+                        src=
+                        {
+                            product_imgUrl ??
+                            'https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629557120822.jpg'
+                        }
                     />
                     <div
                         className='flex text-start flex-col gap-y-1 items-center- justify-center-'
@@ -40,7 +51,7 @@ export default function ShoppingCart({ id = 1, total, price, productname }) {
                         <p
                             className='font-medium lg:hidden  uppercase leading-tight text-gray-500 text-sm'
                         >
-                            ${price * total}
+                            ${price * (total ?? 1)}
                         </p>
                         <p
                             className='font-medium -mt-0.5 uppercase text-black leading-tight text-sm'
@@ -59,25 +70,13 @@ export default function ShoppingCart({ id = 1, total, price, productname }) {
                 <div
                     className='flex items-center space-x-5 lg:px-12'
                 >
-                    <div
-                        className='flex border space-x-3  items-center  px-4 py-1.5 rounded-full   '
-                    >
-                        <span>
 
-                            <AiOutlineMinus
-                                onClick={() => decrementCounter(id)}
-                                size={16}
-                            />
-                        </span>
-                        <span>{total}</span>
-                        <span>
-                            <AiOutlinePlus
-                                onClick={() => incrementCounter(id)}
+                    <IncrementDecrementButton
+                        increement={() => incrementCounter(id)}
+                        decreement={() => decrementCounter(id)}
+                        total={total}
+                    />
 
-                                size={16}
-                            />
-                        </span>
-                    </div>
                     <p
                         className='font-medium hidden lg:block uppercase leading-tight text-gray-500 text-sm'
                     >
@@ -92,6 +91,20 @@ export default function ShoppingCart({ id = 1, total, price, productname }) {
 
                 </div>
             </div>
+            <AnimatePresence>
+                {
+                    total > 9 && (
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1, x: [-100, 100, -100, 100, 0, -100, 100, -100, 100, 0] }}
+                            exit={{ opacity: 0 }}
+                            className="text-xs text-rose-500 text-center pt-2"
+
+                        >you can only add 10 of this items to cart </motion.p>
+                    )
+                }
+            </AnimatePresence>
+
         </motion.div>
     )
 }

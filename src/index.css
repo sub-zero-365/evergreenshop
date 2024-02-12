@@ -3,11 +3,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*{
-  -webkit-tap-highlight-color:transparent;
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   @apply font-manrope !overflow-x-hidden;
+}
+:root {
+  --app-color: #2563eb;
+  --scrollto-color: @apply bg-slate-600;
+  --top-offset: 60px;
+  --color-green: hsl(90, 100%, 50%);
 }
 .arrows {
   overflow: hidden;
@@ -45,14 +51,13 @@ body {
   animation-iteration-count: infinite;
   animation-delay: 10s;
   animation-fill-mode: both;
-  /* animation-play-state: running; */
 }
-.popup:hover {
+/* .popup:hover {
   animation-play-state: paused;
 }
 .pop:not(:hover) {
   animation-play-state: running;
-}
+} */
 
 @keyframes popup {
   from {
@@ -103,4 +108,22 @@ body {
       top: -100%;
     }
   }
+}
+
+.scrollto::-webkit-scrollbar {
+  width: var(--scroll-to-width, 10px);
+  height: var(--scroll-to-height, 10px);
+}
+
+.scrollto::-webkit-scrollbar-thumb {
+  background-color: var(--scrollto-color, #eee);
+  @apply border-slate-400  border-[3px] rounded-[20px];
+}
+
+.scrollto:hover::-webkit-scrollbar-thumb {
+  @apply bg-slate-400;
+}
+
+.scrollto::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollto-color, #eee);
 }

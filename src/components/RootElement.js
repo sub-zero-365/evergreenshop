@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigation } from 'react-router-dom'
 import NavBar from './NavBar'
 import SideBar from './SideBar'
@@ -10,17 +10,17 @@ import Footer from './Footer'
 import NavFooter from './NavFooter'
 import ScrollTop from '../WithRouter'
 
-const RootElement = () => {
-    const { state } = useNavigation()
-    const { isOpen: active } = useToggleCartSlider()
+
+const RootElement = ({ queryClient }) => {
     const [isOpen, setIsOpen] = useState(false)
+    console.log("this is the fetching state of the application", queryClient.isFetching())
     return (
         <>
             <GreetingModal />
-            {/* <NotificationPopUp /> */}
             <CartModal />
             <ScrollTop />
             <NavBar
+                queryClient={queryClient}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
             />
@@ -28,10 +28,7 @@ const RootElement = () => {
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
             />
-            {/* {
-                state == "loading" ? "loading please wait " :
-                    <Outlet />
-            } */}
+         
             <Outlet />
             <NavFooter />
             <Footer />

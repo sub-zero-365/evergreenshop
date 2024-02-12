@@ -2,7 +2,7 @@ import { useState } from "react"
 import Heading from '../components/Heading'
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { motion, AnimatePresence } from "framer-motion"
-export default function Accordians({ text, show, children }) {
+export default function Accordians({ text, show, children, text2 }) {
     const [toggle, setToggle] = useState(show ?? false)
     return (<div className="w-full flex-1 px-1 pb-4 border-b">
         <div className="flex justify-between items-center cursor-pointer"
@@ -15,7 +15,7 @@ export default function Accordians({ text, show, children }) {
             />
 
             {
-                toggle ? <span
+                !text2 ? toggle ? <span
                     className="block px-2"
                 >
                     <AiOutlineMinus
@@ -27,7 +27,11 @@ export default function Accordians({ text, show, children }) {
                     <AiOutlinePlus
                         size={20}
                     />
-                </span>
+                </span> : <Heading
+                    text={text2}
+                    className="!text-sm "
+
+                />
             }
         </div>
         <div className={`overflow-hidden delay-0

@@ -51,20 +51,16 @@ const SideBar = ({ isOpen, setIsOpen }) => {
     return (
         <div
             onClick={() => setIsOpen(false)}
-
-
-            className={`${isOpen ? "visible opacity-100 pointer-events-auto active" : " invisible opacity-0 pointer-events-none"} 
-            
-            duration-300 transition-all group- z-50
-            inset-0 lg:hidden w-screen h-full bg-black/50  fixed`}
+            className={`${isOpen ? "  pointer-events-auto h-[calc(100%-var(--top-offset))] overflow-y-auto  active" : " overflow-hidden pointer-events-none h-0"} 
+            duration-[1s] transition-all group- z-50  !top-[calc(var(--top-offset)-5px)]
+            inset-0 lg:hidden w-screen bg-white  fixed flex flex-col`}
         >
             <div
                 onClick={e => e.stopPropagation()}
-                className={`absolute 
-                
-                
-                transition-[right] duration-500
-                ${isOpen ? "right-0" : " -right-full"} w-[min(15rem,calc(100%-60px))] border top-0 h-full bg-white`}
+                className={` flex-1
+                overflow-y-auto
+                transition-[height] duration-[0.5s]
+                ${isOpen ? " " : ""} h-full w-[min(100%,calc(100%))]  top-0  bg-white`}
             >
                 <div className='flex flex-col justify-between h-full'>
 
@@ -76,28 +72,16 @@ const SideBar = ({ isOpen, setIsOpen }) => {
                         />
 
                     </div>
-                    <div>
-                        <Link to="/"
+                    <div className='pt-5'>
+                   
+                        <ul
 
-                            className=' '
-                        >
-
-                            <img
-                                className='max-w-[15rem] w-full mx-auto '
-                                src='https://evergreenhouseshop.com/wp-content/uploads/2023/04/Untitled-4-1.png'
-                            />
-                        </Link>
-
-
-                        <motion.ul
-
-                            variants={parent}
-                            initial="initial"
-                            whileInView="animate"
+                            // variants={parent}
+                            // initial="initial"
+                            // whileInView="animate"
                             className='overflow-hidden'>
-                            <motion.li
-                                variants={singleword}
-
+                            <li
+                                // variants={singleword}
                                 className='py-3 uppercase
 hover:bg-slate-100 transition-colors duration-500
 border-b px-4 text-gray-700 hover:font-medium text-sm'
@@ -109,8 +93,8 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Home
                                 </NavLink>
-                            </motion.li>
-                            <motion.li
+                            </li>
+                            <li
 
                                 variants={singleword}
 
@@ -124,8 +108,8 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     About
                                 </NavLink>
-                            </motion.li>
-                            <motion.li
+                            </li>
+                            <li
                                 variants={singleword}
 
                                 className='py-3 uppercase
@@ -138,8 +122,8 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Flower
                                 </NavLink>
-                            </motion.li>
-                            <motion.li
+                            </li>
+                            <li
                                 variants={singleword}
 
                                 className='py-3 uppercase
@@ -152,8 +136,8 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Bloq
                                 </NavLink>
-                            </motion.li>
-                            <motion.li
+                            </li>
+                            <li
                                 variants={singleword}
 
                                 className='py-3 uppercase
@@ -166,8 +150,8 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 >
                                     Strains
                                 </NavLink>
-                            </motion.li>
-                            <motion.li
+                            </li>
+                            <li
                                 variants={singleword}
 
                                 className='py-3 uppercase
@@ -179,9 +163,39 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                     onClick={() => setIsOpen(false)}
                                 >
                                     Recipes
-                                    
+
                                 </NavLink>
-                            </motion.li>
+                            </li>
+                            <li
+                                variants={singleword}
+
+                                className='py-3 uppercase
+hover:bg-slate-100 transition-colors duration-500
+border-b px-4 text-gray-700 hover:font-medium text-sm'
+                            >
+                                <NavLink to="/dashboard"
+                                    className={({ isActive }) => isActive && "text-blue-600"}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Dashboard
+
+                                </NavLink>
+                            </li>
+                            <li
+                                variants={singleword}
+
+                                className='py-3 uppercase
+hover:bg-slate-100 transition-colors duration-500
+border-b px-4 text-gray-700 hover:font-medium text-sm'
+                            >
+                                <NavLink to="/dashboard/products"
+                                    className={({ isActive }) => isActive && "text-blue-600"}
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Dashboard products
+
+                                </NavLink>
+                            </li>
 
                             <li
                                 className='flex py-4 space-x-1 flex-wrap  my-5 place-items-center justify-center'
@@ -243,31 +257,30 @@ border-b px-4 text-gray-700 hover:font-medium text-sm'
                                 </div>
                             </li>
 
-                        </motion.ul>
+                        </ul>
                     </div>
-                    <div className='mb-10 space-y-4'>
-                        <Button
-                            title="Login"
-                            className="!block !w-[min(400px,calc(100%-30px))]  hover:!bg-blue-400
-!rounded-full !bg-black !text-xs !py-4  md:!text-sm 
-"
-                            onClick={e => {
-                                e.stopPropagation()
-                            }}
-                        />
-                        <Button
-                            title="Register"
-                            className="!block !w-[min(400px,calc(100%-30px))]  hover:!bg-blue-400
-!rounded-full !bg-black !text-xs !py-4  md:!text-sm 
-"
-                            onClick={e => {
-                                e.stopPropagation()
-                            }}
-                        />
-                    </div>
+
 
                 </div>
             </div>
+          
+                <div
+                    className='flex flex-col flex-none  gap-y-4 w-full pt-2.5'
+                >
+                   <Button
+                        // onClick={() => navigate("/auth")}
+                        title="log in "
+                        className="!block break-keep flex-1 
+                                    !rounded-lg !py-3 !px-4  !text-xs !w-[min(25rem,calc(100%-60px))]
+                                    !text-center
+                                    mx-auto
+                                    !bg-[--color-green]
+                                     !text-black !font-medium uppercase
+                                    "
+                    />
+                </div>
+
+
         </div>
     )
 }

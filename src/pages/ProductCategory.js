@@ -7,8 +7,35 @@ import ProductCart from '../components/ProductCart'
 import { data } from '../constants/demoData'
 import Button from '../components/Button'
 import Slider from '../components/Slider'
-export const loader = ({ params }) => {
-  return params.id
+import { v4 } from 'uuid'
+import BrandLink from '../components/BrandLink'
+import customFetch from '../utils/customFetch'
+import { useQuery } from '@tanstack/react-query'
+
+const productCategoryQuery = (props) => {
+  return ({
+    queryKey: [
+      "productcategory", props
+    ]
+    , queryFn: async () => {
+      const { data } = await customFetch.get(`/products`, {
+        params: props
+      });
+      return data;
+    },
+  })
+}
+
+
+export const loader = (queryClient) => async ({ params }) => {
+  const prodcut_id = params.id
+  console.log("this is the id of the params here", params.id)
+  const data = await queryClient.ensureQueryData(productCategoryQuery({ search: "rose mic" }))
+  console.log("this is the data frm the query", data)
+  return ({
+    items: [],
+    prodcut_id
+  })
 
 }
 const ProductCategory = () => {
@@ -30,7 +57,8 @@ const ProductCategory = () => {
       value: "Rating"
     },
   ], [])
-  const productdata = useLoaderData()
+  const { prodcut_id } = useLoaderData()
+  const { data } = useQuery(productCategoryQuery({ search: "vapes and cakes"}))
   const [active, setActive] = useState(false)
   return (
     <div>
@@ -69,14 +97,18 @@ const ProductCategory = () => {
           />
           <div className='max-h-[min(calc(100vh-50px),25rem)] overflow-y-auto'>
             <div class="z-10  bg-white">
+              <BrandLink
+                brand={"user"}
+              >
 
+              </BrandLink>
               <ul class="px-0 pb-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton">
 
                 {
-                  Array.from({ length: 20 }, (arr, index) => <li className='cursor-pointer'>
+                  data?.products?.map((arr, index) => <li className='cursor-pointer'>
                     <div class="flex items-center py-2.5 rounded  ">
                       <input id={`checkbox-item-${index}`} type="checkbox" value="" class="w-5 h-5 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-700 " />
-                      <label for={`checkbox-item-${index}`} class="w-full ml-2 text-sm font-medium text-black ">Bonnie Green</label>
+                      <label htmlFor={`checkbox-item-${index}`} class="w-full ml-2 text-sm font-medium text-black ">Bonnie Green</label>
                     </div>
                   </li>)
                 }
@@ -103,7 +135,7 @@ const ProductCategory = () => {
             </li>
             <li>
               <div className="flex items-center">
-                <svg aria-hidden="true" className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                <svg aria-hidden="true" className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                 <a href="#" className="ml-1 text-sm  text-white font-bold hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white">
                   <h1 className="text-white  font-medium text-lg ">About us</h1>
 
@@ -115,7 +147,7 @@ const ProductCategory = () => {
         </nav>
         <div className='relative z-[1]'>
           <Heading
-            text={productdata ?? ""}
+            text={prodcut_id ?? ""}
             className={"!text-white !font-black"}
           />
           <p className='max-w-3xl mx-auto text-center px-4 lg:px-0 text-white text-lg leading-tight font-medium'>
@@ -131,7 +163,7 @@ const ProductCategory = () => {
         <div
           className='flex w-full items-start'
         >
-          <div className='flex-none  w-[15rem] hidden lg:block'>
+          <div className='flex-none  lg:sticky top-4  w-[15rem] hidden lg:block'>
 
             <div className='flex flex-col gap-y-'>
               <Heading
@@ -161,14 +193,13 @@ const ProductCategory = () => {
             />
             <div className='max-h-[min(calc(100vh-50px),25rem)] overflow-y-auto'>
               <div class="z-10  bg-white">
-
                 <ul class="px-0 pb-3 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownSearchButton">
 
                   {
-                    Array.from({ length: 20 }, (arr, index) => <li className='cursor-pointer'>
+                    Array.from({ length: 10 }, (arr, index) => <li className='cursor-pointer'>
                       <div class="flex items-center py-2.5 rounded  ">
                         <input id={`checkbox-item-${index}`} type="checkbox" value="" class="w-5 h-5 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-700 " />
-                        <label for={`checkbox-item-${index}`} class="w-full ml-2 text-sm font-medium text-black ">Bonnie Green</label>
+                        <label htmlhtmlFor={`checkbox-item-${index}`} class="w-full ml-2 text-sm font-medium text-black ">Bonnie Green</label>
                       </div>
                     </li>)
                   }
@@ -197,16 +228,18 @@ const ProductCategory = () => {
               />
             </div>
             <div
-              className=' grid  grid-cols-[repeat(auto-fit,minmax(min(12rem,calc(100%-30px)),_1fr))]  lg:grid-cols-[repeat(auto-fit,minmax(min(15rem,calc(100%-30px)),_1fr))] !w-full      gap-x-1 lg:gap-x-0'
+              className=' grid  grid-cols-[repeat(auto-fit,minmax(min(10rem,calc(100%-30px)),_1fr))]  lg:grid-cols-[repeat(auto-fit,minmax(min(15rem,calc(100%-30px)),_1fr))] !w-full      gap-x-1 lg:gap-x-0'
             >
-              {data.map((item, index) => <ProductCart
-                {
-                ...item
-                }
-                className="rounded-md !w-full"
-                key={index}
+              {
 
-              />)}
+                data?.products.map((item, index) => <ProductCart
+                  {
+                  ...item
+                  }
+                  className="rounded-md !w-full"
+                  key={v4()}
+
+                />)}
             </div>
           </div>
         </div>

@@ -3,7 +3,14 @@ import Heading from '../components/Heading'
 import { data } from '../constants/demoData'
 import ProductCart from '../components/ProductCart'
 import { motion } from "framer-motion"
+import useProduct from '../hooks/useProduct'
 const Shop = () => {
+    const { products } = useProduct({
+        limit: 5
+        , name: "rose mary"
+    })
+    console.log("this is products", products)
+    // console.log("this is the product data here", products)
     return (
         <div>
             <div
@@ -28,7 +35,7 @@ const Shop = () => {
             <div
                 className='grid  grid-cols-[repeat(auto-fit,minmax(min(12rem,calc(100%-30px)),_1fr))]  lg:grid-cols-[repeat(auto-fit,minmax(min(17rem,calc(100%-30px)),_1fr))] !w-full   !container mx-auto lg:px-6 gap-x-1 lg:gap-x-0'
             >
-                {data.map((item, index) => <ProductCart
+                {products?.map((item, index) => <ProductCart
                     {
                     ...item
                     }

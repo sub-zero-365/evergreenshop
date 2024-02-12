@@ -9,43 +9,62 @@ import ReactStars from 'react-rating-stars-component'
 import { addToCart, removeFromCart } from '../actions/cartItems'
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs"
 // import Select from 'react-select'
-import "swiper/css"
-import "swiper/css/navigation"
-import "swiper/css/pagination"
-import "swiper/css/autoplay"
-import "swiper/css/a11y"
-import "swiper/css/scrollbar"
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import "swiper/css/scrollbar"
+
 import ProductCart from '../components/ProductCart';
 // import ReactStars from "react-rating-stars-component";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import ImageSlider from "../components/ImageSlider";
 import useItem from "../utils/checkInCart";
 import { useDispatch } from "react-redux";
-export const loader = ({ params }) => {
-    const isProduct = data.find((elm) => elm.id == params.id)
-    console.log(isProduct)
-    if (!isProduct) throw new Error("no items with id")
-    return isProduct
+import customFetch from "../utils/customFetch";
+import { useQuery } from "@tanstack/react-query";
+//this singleproductquery returns the products;
 
+const singleProductQuery = (id) => {
+    return {
+        queryKey: ['products', id],
+        queryFn: async () => {
+            const { data } = await customFetch.get(`/products/${id}`);
+            return data;
+        },
+    };
+};
+export const loader = (queryClient) => async ({ params }) => {
+    try {
+        // the ensurequerydata trys to get a value query value from the catch if there is no value
+        // it refetch the query and get the new data
+        console.log("this is the fetching state of the application", queryClient.isFetching())
+        const data = await queryClient.ensureQueryData(singleProductQuery(params.id))
+        // i dont know why the intructor of the code didnt return the data here 
+        // so the useloader data can take 
+        const state = queryClient.getQueryState({ queryKey: ["products", params.id] })
+        console.log(data, "this is the last time the data was updated ")
+        return params.id
+    } catch (err) {
+        console.log(err)
+        throw err
+    }
 }
 
 const Product = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [swiperRef, setSwiperRef] = useState(null);
-
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    // after loading the data from the server 
+    // the loader function returns the id if there is no error from the server
+    // get the id from the loader function using the hook useloaderdata
+    const _id = useLoaderData()
+    // getting the id we search using the usequery 
+    // since the data is in the cache 
+    // the use query take a little time to show the client the data
+    const product_ = useQuery(singleProductQuery(_id))
 
-    const productdata = useLoaderData()
-
-    const { productname, price, id, total } = productdata
-    const { incart } = useItem(id)
-    const [product, setProduct] = useState(productdata)
+    const { product_name: productname, product_imgUrl,
+        product_price: price, id, total, product_rating } = product_?.data?.product
+    const { incart } = useItem(_id)
+    const [product, setProduct] = useState(product_?.data?.product)
+    // console.log("this is product data here", product)
+    const [swiperRef, setSwiperRef] = useState(null);
     const nextSlide = () => {
         swiperRef.slideNext();
     };
@@ -73,9 +92,7 @@ const Product = () => {
                 </div>
                 <div
                     className=""
-
                 >
-
                     <div className="px-2">
                         <div className=" flex  items-center gap-5">
                             <ReactStars
@@ -83,7 +100,7 @@ const Product = () => {
                                 size={24}
                                 activeColor="#ffd700"
                                 edit={false}
-                                value={4}
+                                value={product_rating}
                             />
                             <p className="">
                                 270 Reviews</p>
@@ -94,11 +111,11 @@ const Product = () => {
                         />
                         <Heading
                             className="!text-xl !py-1 !font-bold !text-start"
-                            text={`$${price}`}
+                            text={`$${price * product?.total}`}
                         />
                         <Heading
                             className="!text-xl !text-rose-800 line-through !py-1 !font-bold !text-start"
-                            text={"$549,9"}
+                            text={product?.cancel_price?.toFixed(2) * product?.total}
                         />
                         {/* start of buttons  */}
                         {
@@ -109,7 +126,7 @@ const Product = () => {
 "
                                 onClick={e => {
                                     e.stopPropagation()
-                                    dispatch(removeFromCart(id))
+                                    dispatch(removeFromCart(_id))
                                 }}
                             /> : <div className="flex items-center space-x-1">
                                 <div
@@ -341,7 +358,7 @@ const Product = () => {
                     // spaceBetween={30}
 
                     // effect='fade'
-                    speed= {1000}
+                    speed={1000}
                     onSwiper={setSwiperRef}
                     breakpoints={{
                         640: {

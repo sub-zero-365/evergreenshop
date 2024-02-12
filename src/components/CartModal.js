@@ -13,24 +13,23 @@ import { useSelector, useDispatch } from 'react-redux'
 import { calculateTotal, clearCart } from '../actions/cartItems'
 import EmptyCart from './EmptyCart'
 
-
 const CartModal = () => {
     const { isOpen: active, close } = useToggleCartSlider()
 
     const { cartItem, amount } = useSelector(state => state.cartItems)
-    const iscartempty = cartItem?.length > 0
 
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(calculateTotal())
     }, [cartItem, amount])
+    const iscartempty = cartItem?.length > 0
     const navigate = useNavigate()
 
 
 
     return (
         <>
-            <Slider className2="!w-[min(40rem,calc(100%-3rem))] overflow-hidden !z-[100]"
+            <Slider className2="!w-[min(40rem,calc(100%-3rem))] overflow-hidden  [--scroll-height:10px] !z-[100]"
                 active={active}
                 setActive={close}
             >
@@ -49,7 +48,7 @@ const CartModal = () => {
 
                         </div>
                         <Heading
-                            className="!text-2xl !flex-1"
+                            className="!text-2xl !flex-1 "
                         >
                             Cart Items
                         </Heading>
@@ -62,25 +61,21 @@ const CartModal = () => {
                         }
 
                     </div>
-                    <div className='overflow-auto flex-1'>
-                        {/* main screen here  */}
-                        {/* <EmptyCart /> */}
-
+                    <div className=' overflow-auto scrollto [--scrollto-color:#eee] [--scroll-to-width:10px] overflow-x-hidden flex-1'>
                         {
                             iscartempty ?
 
                                 <AnimatePresence>
                                     {
-                                        cartItem.map((arr, index) => {
+                                        cartItem.map((arr) => {
                                             return (
-                                                <ShoppingCart key={index}
+                                                <ShoppingCart
+                                                key={arr?._id}
                                                     {...arr}
                                                 />
                                             )
                                         })}
                                 </AnimatePresence>
-
-
                                 : <EmptyCart />
 
                         }

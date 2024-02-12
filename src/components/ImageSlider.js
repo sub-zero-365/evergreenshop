@@ -14,7 +14,7 @@ import './imageslider.css';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import ImageMagnifier from './ImageViewer';
 
-export default function ImageSlider() {
+export default function ImageSlider({imgUrl}) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     return (

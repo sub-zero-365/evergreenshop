@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { data } from "../constants/demoData";
 
 const initialState = {
-    cartItem: data,
+    cartItem: [],
     isLoading: false,
     amount: 0,
     total: 0,
@@ -28,26 +28,25 @@ const cartSlice = createSlice({
             const {
                 cartItem: item
             } = state;
-            const isItem = item.find(({ id }) => id == payload);
+            const isItem = item.find(({ _id: id }) => id == payload);
             if (isItem.total > 9) return
-
             isItem.total += 1
         },
         decreaseItem(state, { payload }) {
-            const item=state.cartItem
-            const isItem = item.find(({ id }) => id == payload);
+            const item = state.cartItem
+            const isItem = item.find(({ _id: id }) => id == payload);
             if (isItem?.total <= 1) return
             isItem.total -= 1
         },
         removeFromCart(state, { payload }) {
-            const newItems = state.cartItem.filter(({ id }) => id != payload);
+            const newItems = state.cartItem.filter(({ _id: id }) => id != payload);
             state.cartItem = newItems;
         },
         calculateTotal: (state) => {
             let price = 0;
             let total = 0
             for (let item of state.cartItem) {
-                price += item.price * item.total
+                price += item.product_price * item.total
                 total += item.total
             }
             state.total = total

@@ -1,46 +1,47 @@
+import demoimage from "../assets/images/main-bg-image"
+
 
 export const data = [
 
     {
-        productname: "brazilian hair",
-        price: 200,
+        productname: "cannabis kush",
+        price: 400,
         total: 1,
-        id:1
+        id: 1,
+        product_category: ["drugs", "cannabis",],
+
     },
     {
-        productname: "mesh",
-        price: 240,
+        productname: "crack downfa%s ",
+        price: 340,
         total: 1,
-        id:2
+        id: 2,
+        product_category: ["drugs", "cannabis",],
+
     },
     {
-        productname: "newly",
-        price: 120,
+        productname: "cockers buld ",
+        price: 140,
         total: 1,
-        id:3
+        id: 3,
+        product_category: ["drugs", "cannabis",],
+
     },
     {
-        productname: "properlar",
-        price: 290,
+        productname: "florest forest",
+        price: 340,
         total: 1,
-        id:4
+        id: 4,
+        product_category: ["drugs", "cannabis",],
+
     },
     {
-        productname: "fresher",
-        price: 78,
+        productname: "crack downfa%s ",
+        price: 340,
         total: 1,
-        id:5
+        id: 1,
+        product_category: ["drugs", "cannabis",],
+
     },
-    {
-        productname: "hollander",
-        price: 78,
-        total: 1,
-        id:6
-    },
-    {
-        productname: "timeless",
-        price: 78,
-        total: 1,
-        id:10
-    },
+
 ]

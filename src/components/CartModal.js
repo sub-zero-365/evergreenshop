@@ -90,7 +90,7 @@ const CartModal = () => {
                                 initial={{ y: 0, opacity: 1 }}
                                 exit={{ opacity: 0, y: 200 }}
 
-                                className="items-center bg-white
+                                className="items-center bg-white first-letter:divide-x-0
 w-full md:flex- md:max-w-3xl md:rounded-lg mx-auto fixed-- -bg-white rounded-t-2xl py-4 pb-0 min-h-[100px] shadow-2xl  ">
                                 <div className="flex items-center justify-between px-4 mb-6 md:gap-10 flex-none" >
                                     <h1 className="text-black text-xl font-semibold md:mb-4">Total</h1>

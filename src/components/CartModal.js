@@ -70,7 +70,7 @@ const CartModal = () => {
                                         cartItem.map((arr) => {
                                             return (
                                                 <ShoppingCart
-                                                key={arr?._id}
+                                                    key={arr?._id}
                                                     {...arr}
                                                 />
                                             )
@@ -94,7 +94,7 @@ const CartModal = () => {
 w-full md:flex- md:max-w-3xl md:rounded-lg mx-auto fixed-- -bg-white rounded-t-2xl py-4 pb-0 min-h-[100px] shadow-2xl  ">
                                 <div className="flex items-center justify-between px-4 mb-6 md:gap-10 flex-none" >
                                     <h1 className="text-black text-xl font-semibold md:mb-4">Total</h1>
-                                    <h1 className="text-3xl  font-medium  tracking-tight italic">${amount}</h1>
+                                    <h1 className="text-3xl  font-medium  tracking-tight italic">${amount.toFixed(2)}</h1>
                                 </div>
 
                                 <Button title="Place Order"

@@ -23,7 +23,7 @@ export default function ShoppingCart(props) {
                 transition: {
                     duration: 0.3,
                     mass: 25,
-                    
+
                 }
             }}
             className={` border-[0.0925rem] select-none border-[#e8e8e8]   w-full py-4 px-2 md:px-2.5 lg:px-3 `}
@@ -46,18 +46,18 @@ export default function ShoppingCart(props) {
                         className='flex text-start flex-col gap-y-1 items-center- justify-center-'
                     >
                         <h3
-                            className='uppercase line-clamp-2 text-xl mb-1 font-bold text-black'
+                            className='uppercase line-clamp-2 text-lg lg:text-xl mb-1 font-medium text-black'
                         >{productname || "n/a"}</h3>
                         <p
                             className='font-medium lg:hidden  uppercase leading-tight text-gray-500 text-sm'
                         >
-                            ${price * (total ?? 1)}
+                            ${(price * (total ?? 1))?.toFixed(1)}
                         </p>
-                        <p
+                        {/* <p
                             className='font-medium -mt-0.5 uppercase text-black leading-tight text-sm'
                         >
                             color:gilden green
-                        </p>
+                        </p> */}
                         <span
                             onClick={() => dispatch(removeFromCart(id))}
                             className='text-rose-700 cursor-pointer uppercase text-xs font-medium lg:hidden '

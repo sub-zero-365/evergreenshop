@@ -3,11 +3,12 @@ import { motion } from 'framer-motion'
 import { EffectCreative, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "./productcart.css"
-import Button from './Button';
+// import Button from './Button';
 import useItem from '../utils/checkInCart';
 import { useDispatch } from 'react-redux';
 import { addToCart, removeFromCart } from '../actions/cartItems'
 import { useNavigate } from 'react-router-dom';
+import { Button } from './ui/button';
 
 const variants = {
     show: {
@@ -46,9 +47,8 @@ const ProductCart = (props) => {
         >{id}
             <div className='absolute left-0 top-0 z-10'>
                 <Button
-                    title="10% off"
-                    className="!px-2  !rounded-lg !text-xs !bg-[#652fb7] !uppercase"
-                />
+                    className="!px-2 py-1 h-auto text-white !rounded-xl  !text-xs !bg-[#652fb7] !uppercase"
+                >10% off</Button>
             </div>
 
             <Swiper className="mySwiper"
@@ -71,21 +71,21 @@ const ProductCart = (props) => {
             >
                 <SwiperSlide>
                     <img
-                        src={product_imgUrl || "https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629557120822.jpg"}
+                        src={product_imgUrl || "https://weed.com/wp-content/uploads/cache/thumbs_260x260/458399_delta-8-thc-gummies-1.jpg"}
                         className='h-[12rem] md:h-[15rem] w-full '
                         alt="hair " />
 
                 </SwiperSlide>
                 <SwiperSlide>
                     <img
-                        src='https://evergreenhouseshop.com/wp-content/uploads/2021/07/WhatsApp-Image-2021-10-28-at-14.44.56.jpeg'
+                        src='https://weed.com/wp-content/uploads/2024/05/cbdfx-photo-render-gummies-original-mixed-berries-bottle-3000mg-apr-14-2023-260x260.png'
                         className='h-[12rem] md:h-[15rem] w-full '
                         alt="hair " />
 
                 </SwiperSlide>
                 <SwiperSlide>
                     <img
-                        src={"https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629558788712-500x500.jpg"}
+                        src={"https://weed.com/wp-content/uploads/2024/02/5f26fdaf-e83b-439b-a824-b02532802b3f-260x260.jpg"}
                         className='h-[12rem] md:h-[15rem] w-full '
                         alt="hair " />
 
@@ -98,7 +98,7 @@ const ProductCart = (props) => {
                     Array.from({ length: 3 }, (_, index) => <div
                         onClick={() => slideTo(index)}
                         className={`border-[#e0e0e0] cursor-pointer border w-7 h-7 ${activeSlide == index ? "scale-150" : ""} `}><img
-                            src='https://evergreenhouseshop.com/wp-content/uploads/2021/07/moon-rock-pre-rolled-blunt-510x383-1-500x375.jpg' /> </div>)
+                            src='https://weed.com/wp-content/uploads/2024/02/5f26fdaf-e83b-439b-a824-b02532802b3f-260x260.jpg' /> </div>)
                 }
             </div>
             <div>
@@ -116,9 +116,9 @@ const ProductCart = (props) => {
                 >
                     {
                         incart ? <Button
-                            title="remove from cart"
-                            className="!block cursor-pointer lg:translate-y-10 lg:opacity-0 group-[:hover]:opacity-100  group-[:hover]:translate-y-0 !mx-auto !w-full hover:!bg-rose-900
-!rounded-full !bg-rose-800 !text-xs !py-3 !transition-all !duration-[0.5s] md:!text-sm  group-[:hover]:visible lg:invisible
+                            // title="remove from cart"
+                            className="!block cursor-pointer h-auto lg:translate-y-10  lg:opacity-0 group-[:hover]:opacity-100  group-[:hover]:translate-y-0 !mx-auto !w-full hover:!bg-rose-900
+!rounded-full !bg-rose-800 text-white !text-xs !py-3 !transition-all !duration-[0.5s] md:!text-sm  group-[:hover]:visible lg:invisible
 
 "
                             onClick={e => {
@@ -126,16 +126,21 @@ const ProductCart = (props) => {
                                 console.log(e)
                                 dispatch(removeFromCart(id))
                             }}
-                        /> : <Button
-                            title="add to cart"
-                            className="!block lg:translate-y-10 lg:opacity-0 group-[:hover]:opacity-100 y-0 group-[:hover]:translate-y-0 !mx-auto !w-full hover:!bg-blue-400
-!rounded-full !bg-black !text-xs !py-3 !transition-all !duration-[0.5s] md:!text-sm  group-[:hover]:visible lg:invisible
+                        >
+                            remove from cart
+                        </Button> : <Button
+                            // title="add to cart"
+                            className="!block lg:translate-y-10 lg:opacity-0 h-auto group-[:hover]:opacity-100 y-0 group-[:hover]:translate-y-0 !mx-auto !w-full hover:!bg-blue-400
+!rounded-full !bg-black !text-xs !py-3 text-white !transition-all !duration-[0.5s] md:!text-sm  group-[:hover]:visible lg:invisible
 "
                             onClick={e => {
                                 e.stopPropagation()
                                 dispatch(addToCart(item))
                             }}
-                        />
+                        >
+                            add to cart
+
+                        </Button>
                     }
                 </div>
             }

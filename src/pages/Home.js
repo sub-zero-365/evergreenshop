@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
 import ProductCart from '../components/ProductCart';
-import { data } from '../constants/demoData';
+import { data, products } from '../constants/demoData';
 import Heading from '../components/Heading';
 import { motion } from "framer-motion"
 import Swipercroll from '../components/Swipercroll';
@@ -26,7 +26,7 @@ const Home = ({ queryClient }) => {
       return data
       // const response = await customFetch.get('/products');
       // return response.data;
-      
+
     },
     queryKey: ['products'],
   })
@@ -215,7 +215,7 @@ const Home = ({ queryClient }) => {
           className="mySwiper my-10">
           {
 
-            productQuery?.data?.products?.map((arr, index) => <SwiperSlide
+            products?.map((arr, index) => <SwiperSlide
               key={index}
             >
               {
@@ -500,7 +500,7 @@ const Home = ({ queryClient }) => {
           </div>
         </div>
       </section>
-      <section className='py-24'>
+      <section className='py-24 hidden'>
         <Heading
           text="What others are saying about us"
           className="!text-3xl md:!text-4xl !px-4 !mb-5 !font-semibold"

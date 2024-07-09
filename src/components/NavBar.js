@@ -181,7 +181,7 @@ top-[calc(100%+0.25rem)] bg-white px-2 pr-8'>
 
                             <img
                                 className='max-w-[15rem] w-full h-[3.44rem]'
-                                src='https://evergreenhouseshop.com/wp-content/uploads/2023/04/Untitled-4-1.png'
+                                src='https://weed.com/wp-content/uploads/cache/thumbs_150x150/460862_cannabis-edibles-gummies-beverages.png'
                             />
                         </Link>
                         <div className=' flex-1  hidden lg:flex items-stretch justify-center '>

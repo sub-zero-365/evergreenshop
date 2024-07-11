@@ -33,18 +33,19 @@ export default function ImageSlider({imgUrl}) {
                 className="mySwiper2"
             >
                 <SwiperSlide>
+                    
                     <ImageMagnifier
                         magnifierHeight={200}
                         magnifieWidth={200}
 
-                        src={"https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629557120822-500x500.jpg"}
+                        src={"https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-3-5G-Flower-600x600.png"}
                     />
                 </SwiperSlide>
                 <SwiperSlide>
                 <ImageMagnifier
                         magnifierHeight={200}
                         magnifieWidth={200}
-                        src="https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629558788712-500x500.jpg"
+                        src="https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-Back-2-600x600.png"
                     />
                 </SwiperSlide>
                 <SwiperSlide>
@@ -52,14 +53,14 @@ export default function ImageSlider({imgUrl}) {
                 <ImageMagnifier
                         magnifierHeight={200}
                         magnifieWidth={200}
-                        src="https://evergreenhouseshop.com/wp-content/uploads/2021/07/moon-rock-pre-rolled-blunt-510x383-1-500x375.jpg"
+                        src="https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-28G-Flower-600x600.png"
                     />
                 </SwiperSlide>
                 <SwiperSlide>
                 <ImageMagnifier
                         magnifierHeight={200}
                         magnifieWidth={200}
-                        src="https://evergreenhouseshop.com/wp-content/uploads/2021/07/download-29.jpg"
+                        src="https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-7G-Flower-600x600.png"
                     />
                 </SwiperSlide>
 
@@ -76,16 +77,16 @@ export default function ImageSlider({imgUrl}) {
                 className="mySwiper"
             >
                 <SwiperSlide>
-                    <img src="https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629557120822-500x500.jpg" />
+                    <img src="https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-3-5G-Flower-600x600.png" />
                 </SwiperSlide>
                 <SwiperSlide>
                     <img src="https://evergreenhouseshop.com/wp-content/uploads/2021/08/image_search_1629558788712-500x500.jpg" />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src="https://evergreenhouseshop.com/wp-content/uploads/2021/07/moon-rock-pre-rolled-blunt-510x383-1-500x375.jpg" />
+                    <img src="https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-28G-Flower-600x600.png" />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <img src="https://evergreenhouseshop.com/wp-content/uploads/2021/07/download-29.jpg" />
+                    <img src="https://weed.com/wp-content/uploads/2024/05/Bloomz-Premium-THCA-7G-Flower-600x600.png" />
                 </SwiperSlide>
 
             </Swiper>

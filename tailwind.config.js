@@ -5,7 +5,7 @@ const { fontFamily } = require("tailwindcss/defaultTheme")
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-content: ["./src/**/*.{html,js,jsx}"],
+content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
 
   theme: {
     container: {
@@ -22,9 +22,12 @@ content: ["./src/**/*.{html,js,jsx}"],
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+        "color": "hsl(var(--color-primary,red))",
+
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -37,6 +40,7 @@ content: ["./src/**/*.{html,js,jsx}"],
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
+
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",

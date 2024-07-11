@@ -1,23 +1,23 @@
-import { useLoaderData, useNavigate } from "react-router-dom"
+import { useState } from 'react';
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
+import ReactStars from 'react-rating-stars-component';
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { A11y, Autoplay, FreeMode, Navigation, Pagination, Scrollbar, Thumbs } from "swiper/modules";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { addToCart, removeFromCart } from '../actions/cartItems';
+import Button from "../components/Button";
+import Heading from "../components/Heading";
 import { data } from '../constants/demoData';
-import Heading from "../components/Heading"
-import Button from "../components/Button"
-import { FreeMode, Navigation, Pagination, Scrollbar, A11y, Autoplay, Thumbs } from "swiper/modules";
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { useState, useRef } from 'react'
-import ReactStars from 'react-rating-stars-component'
-import { addToCart, removeFromCart } from '../actions/cartItems'
-import { BsArrowLeft, BsArrowRight } from "react-icons/bs"
 // import Select from 'react-select'
 
 import ProductCart from '../components/ProductCart';
 // import ReactStars from "react-rating-stars-component";
+import { useQuery } from "@tanstack/react-query";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { useDispatch } from "react-redux";
 import ImageSlider from "../components/ImageSlider";
 import useItem from "../utils/checkInCart";
-import { useDispatch } from "react-redux";
 import customFetch from "../utils/customFetch";
-import { useQuery } from "@tanstack/react-query";
 //this singleproductquery returns the products;
 
 const singleProductQuery = (id) => {
@@ -32,13 +32,13 @@ const singleProductQuery = (id) => {
 export const loader = (queryClient) => async ({ params }) => {
     try {
         // the ensurequerydata trys to get a value query value from the catch if there is no value
-        // it refetch the query and get the new data
-        console.log("this is the fetching state of the application", queryClient.isFetching())
-        const data = await queryClient.ensureQueryData(singleProductQuery(params.id))
-        // i dont know why the intructor of the code didnt return the data here 
-        // so the useloader data can take 
-        const state = queryClient.getQueryState({ queryKey: ["products", params.id] })
-        console.log(data, "this is the last time the data was updated ")
+        // // it refetch the query and get the new data
+        // console.log("this is the fetching state of the application", queryClient.isFetching())
+        // const data = await queryClient.ensureQueryData(singleProductQuery(params.id))
+        // // i dont know why the intructor of the code didnt return the data here 
+        // // so the useloader data can take 
+        // const state = queryClient.getQueryState({ queryKey: ["products", params.id] })
+        // console.log(data, "this is the last time the data was updated ")
         return params.id
     } catch (err) {
         console.log(err)
@@ -60,7 +60,9 @@ const Product = () => {
     const product_ = useQuery(singleProductQuery(_id))
 
     const { product_name: productname, product_imgUrl,
-        product_price: price, id, total, product_rating } = product_?.data?.product
+        product_price: price, id, total, product_rating } = product_?.data?.product ?? {
+            
+        }
     const { incart } = useItem(_id)
     const [product, setProduct] = useState(product_?.data?.product)
     // console.log("this is product data here", product)

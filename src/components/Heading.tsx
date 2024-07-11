@@ -7,7 +7,7 @@ type Props = {
 }
 const Heading = ({ text, children, className }: Props) => {
     return (
-        <h1 className={cn(` py-3 font-bricolage text-4xl lg:text-5xl text-center leading-wider tracking-tight`, className)}>{children ?? text} </h1>
+        <h1 className={cn(` py-3 font-bricolage text-lg lg:text-lg text-center leading-wider tracking-tight`, className)}>{children ?? text} </h1>
     )
 }
 
